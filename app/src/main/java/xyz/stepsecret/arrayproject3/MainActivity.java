@@ -1,5 +1,6 @@
 package xyz.stepsecret.arrayproject3;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.LayerDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,7 @@ import xyz.stepsecret.arrayproject3.Badge.Utils;
 import xyz.stepsecret.arrayproject3.TabFragments.HomeFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.PromotionFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.ShopFragment;
-import xyz.stepsecret.arrayproject3.TabFragments.MyQueueFragment;
+import xyz.stepsecret.arrayproject3.TabFragments.QueueFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ActionBar actionBar;
 
     private int[] tabIcons = {
             R.drawable.house,
@@ -37,19 +39,26 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.promotion
     };
 
+    //public static FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-
+        actionBar = getSupportActionBar();
+        //actionBar.setTitle("Home");
         //actionBar.setDisplayHomeAsUpEnabled(true); // show <------
-        actionBar.setDisplayHomeAsUpEnabled(false);
+       // actionBar.setDisplayHomeAsUpEnabled(false);
 
+
+
+
+        //fragmentManager = getSupportFragmentManager();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -57,7 +66,31 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
+        /*tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                int position = tab.getPosition();
+
+                actionBar.setTitle(""+tab.getText());
+
+               // Log.e(" Main ",""+position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        */
+
         setupTabIcons();
+
+
 
     }
 
@@ -71,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new HomeFragment(), "Home");
-        adapter.addFrag(new MyQueueFragment(), "Shop");
-        adapter.addFrag(new ShopFragment(), "My queue");
+        adapter.addFrag(new ShopFragment(), "Shop");
+        adapter.addFrag(new QueueFragment(), "My queue");
         adapter.addFrag(new PromotionFragment(), "Promotion");
         viewPager.setAdapter(adapter);
 

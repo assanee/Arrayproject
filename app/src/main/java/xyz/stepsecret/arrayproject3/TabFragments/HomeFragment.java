@@ -4,20 +4,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import xyz.stepsecret.arrayproject3.R;
+import xyz.stepsecret.arrayproject3.TabFragments.adapters.HomeRecyclerViewDataAdapter;
+import xyz.stepsecret.arrayproject3.TabFragments.models.HomeSectionDataModel;
+import xyz.stepsecret.arrayproject3.TabFragments.models.HomeSingleItemModel;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerview;
-    private RecyclerView recyclerview2;
+    ArrayList<HomeSectionDataModel> allSampleData;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,35 +28,49 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
-        View view =  inflater.inflate(R.layout.home_fragment, container, false);
+        allSampleData = new ArrayList<HomeSectionDataModel>();
 
-        recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerview.setLayoutManager(llm);
 
-        recyclerview2 = (RecyclerView)view.findViewById(R.id.recyclerview2);
-        StaggeredGridLayoutManager llm2 = new StaggeredGridLayoutManager(1,1);
-        recyclerview2.setLayoutManager(llm2);
+        View v = inflater.inflate(R.layout.home_fragment, container, false);
 
-        return view;
+
+        RecyclerView my_recycler_view = (RecyclerView) v.findViewById(R.id.home_my_recycler_view);
+
+        my_recycler_view.setHasFixedSize(true);
+
+        HomeRecyclerViewDataAdapter adapter = new HomeRecyclerViewDataAdapter(getContext(), allSampleData);
+
+        my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        //my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        my_recycler_view.setAdapter(adapter);
+
+        createDummyData();
+
+        return v;
     }
+    public void createDummyData() {
+        for (int i = 1; i <= 3; i++) {
+
+            HomeSectionDataModel dm = new HomeSectionDataModel();
+
+            dm.setHeaderTitle("Section " + i);
+
+            ArrayList<HomeSingleItemModel> singleItem = new ArrayList<HomeSingleItemModel>();
+            for (int j = 0; j <= 10; j++) {
+                singleItem.add(new HomeSingleItemModel("id = "+i,"Item " + j, "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
+            }
+
+            dm.setAllItemsInSection(singleItem);
 
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+            allSampleData.add(dm);
 
-        ArrayList<String> items = new ArrayList<String>();
-        for (int i = 0; i < 50; i++) {
-            items.add("TextView_"+i);
+
         }
-
-        HomeAdapter adapter = new HomeAdapter(items);
-        HomeAdapter2 adapter2 = new HomeAdapter2(items);
-        recyclerview.setAdapter(adapter);
-        recyclerview2.setAdapter(adapter2);
-
     }
+
 
 }

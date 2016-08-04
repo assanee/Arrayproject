@@ -73,12 +73,12 @@ public class LoginActivity extends AppCompatActivity {
     {
         Boolean login = Store_data.getBoolean("login", false);
 
-        if(login==true)
-        {
+        //if(login==true)
+        //{
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             finish();
-        }
+        //}
     }
 
     public void login() {
