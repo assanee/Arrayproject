@@ -5,7 +5,9 @@ package xyz.stepsecret.arrayproject3.TabFragments.adapters;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
+import xyz.stepsecret.arrayproject3.BookBranch;
 import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ShopSingleItemModel;
 
@@ -43,7 +46,8 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
 
         ShopSingleItemModel singleItem = itemsList.get(i);
 
-        holder.tvTitle.setText(singleItem.getName());
+        holder.tv_name_brand.setText(singleItem.getName_branch());
+        holder.tv_name_brand_branch.setText(singleItem.getName_brand_branch());
 
         holder.id = singleItem.getId();
 
@@ -70,8 +74,8 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
 
     public class SingleItemRowHolder extends RecyclerView.ViewHolder {
 
-        protected TextView tvTitle;
-
+        protected TextView tv_name_brand;
+        protected TextView tv_name_brand_branch;
         protected ImageView itemImage;
 
         protected String id;
@@ -80,8 +84,9 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
         public SingleItemRowHolder(View view) {
             super(view);
 
-            this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-            this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
+            this.tv_name_brand = (TextView) view.findViewById(R.id.tv_name_brand);
+            this.tv_name_brand_branch = (TextView) view.findViewById(R.id.tv_name_brand_branch);
+            this.itemImage = (ImageView) view.findViewById(R.id.logo_branch);
 
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +94,12 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
                 public void onClick(View v) {
 
 
-                    Toast.makeText(v.getContext(), tvTitle.getText()+" > "+getAdapterPosition()+" : "+id, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), tv_name_brand.getText()+" > "+getAdapterPosition()+" : "+id, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, BookBranch.class);
+                    mContext.startActivity(intent);
+
+
+                    Log.e(" Shop ","");
 
                 }
             });

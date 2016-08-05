@@ -80,8 +80,8 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
         public SingleItemRowHolder(View view) {
             super(view);
 
-            this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-            this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
+            this.tvTitle = (TextView) view.findViewById(R.id.tv_name_brand);
+            this.itemImage = (ImageView) view.findViewById(R.id.logo_branch);
 
 
             view.setOnClickListener(new View.OnClickListener() {

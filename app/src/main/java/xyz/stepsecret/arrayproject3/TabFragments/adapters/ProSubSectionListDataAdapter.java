@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -69,7 +68,7 @@ public class ProSubSectionListDataAdapter extends RecyclerView.Adapter<ProSubSec
             super(view);
 
 
-            this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
+            this.itemImage = (ImageView) view.findViewById(R.id.logo_branch);
 
 
             view.setOnClickListener(new View.OnClickListener() {

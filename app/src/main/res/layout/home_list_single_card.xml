@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/itemImage"
+            android:id="@+id/logo_branch"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
@@ -25,10 +25,10 @@
 
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tv_name_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/itemImage"
+            android:layout_below="@id/logo_branch"
             android:gravity="center"
             android:padding="5dp"
             android:text="Sample title"

@@ -72,21 +72,23 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback , Googl
 
         my_recycler_view.setAdapter(adapter);
 
-        createDummyData();
+        createFavorite();
+        createNear();
 
         return v;
     }
 
-    public void createDummyData() {
-        for (int i = 1; i <= 3; i++) {
+    public void createFavorite() {
+
 
             ShopSectionDataModel dm = new ShopSectionDataModel();
 
-            dm.setHeaderTitle("Section " + i);
+            dm.setHeaderTitle("Favorite");
 
             ArrayList<ShopSingleItemModel> singleItem = new ArrayList<ShopSingleItemModel>();
             for (int j = 0; j <= 10; j++) {
-                singleItem.add(new ShopSingleItemModel("id = "+i,"Item " + j, "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
+
+                singleItem.add(new ShopSingleItemModel("id = ","XeusXeus1" , "Branch" , "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
             }
 
             dm.setAllItemsInSection(singleItem);
@@ -95,7 +97,28 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback , Googl
             allSampleData.add(dm);
 
 
-        }
+
+    }
+    public void createNear() {
+
+
+            ShopSectionDataModel dm = new ShopSectionDataModel();
+
+            dm.setHeaderTitle("List shop nearby");
+
+            ArrayList<ShopSingleItemModel> singleItem = new ArrayList<ShopSingleItemModel>();
+            for (int j = 0; j <= 10; j++) {
+
+                singleItem.add(new ShopSingleItemModel("id = ","XeusXeus1XeusXeus1XeusXeus1" , "Branch" , "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
+            }
+
+            dm.setAllItemsInSection(singleItem);
+
+
+            allSampleData.add(dm);
+
+
+
     }
 
     @Override

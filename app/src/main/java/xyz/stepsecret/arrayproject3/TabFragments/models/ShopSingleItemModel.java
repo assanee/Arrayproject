@@ -6,19 +6,20 @@ package xyz.stepsecret.arrayproject3.TabFragments.models;
 public class ShopSingleItemModel {
 
 
-    private String name;
+    private String name_brand;
+    private String name_brand_branch;
     private String url;
-    private String description;
     private String id;
 
 
     public ShopSingleItemModel() {
     }
 
-    public ShopSingleItemModel(String id, String name, String url) {
+    public ShopSingleItemModel(String id, String name_brand,String name_brand_branch, String url) {
         this.id = id;
-        this.name = name;
+        this.name_brand = name_brand;
         this.url = url;
+        this.name_brand_branch = name_brand_branch;
     }
 
 
@@ -38,20 +39,20 @@ public class ShopSingleItemModel {
         this.url = url;
     }
 
-    public String getName() {
-        return name;
+    public String getName_branch() {
+        return name_brand;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName_branch(String name_brand) {
+        this.name_brand = name_brand;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName_brand_branch() {
+        return name_brand_branch;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName_brand_branch(String name_brand_branch) {
+        this.name_brand_branch = name_brand_branch;
     }
 
 

@@ -46,6 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".BookBranch" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Form.SignupActivity" android:theme="@style/AppTheme.Dark" />
 
         <meta-data

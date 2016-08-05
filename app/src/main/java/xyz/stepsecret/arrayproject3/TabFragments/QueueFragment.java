@@ -64,7 +64,7 @@ public class QueueFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 QueueModel queues = queueList.get(position);
-                Toast.makeText(getContext(), queues.getTime() + " is selected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), queues.getTime() + " is selected!", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -84,12 +84,20 @@ public class QueueFragment extends Fragment {
             }
         });
 */
+        clearData();
         prepareMovieData();
 
         return v;
     }
+    public void clearData() {
+        queueList.clear(); //clear list
+        mAdapter.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
+    }
+
 
     private void prepareMovieData() {
+
+       // mAdapter.re
 
         String[] alert = new String[]{
                 "05/12/2016 12:32:22 A010 Your Queue is on service.",
