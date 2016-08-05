@@ -3,7 +3,6 @@ package xyz.stepsecret.arrayproject3.TabFragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import xyz.stepsecret.arrayproject3.R;
+import xyz.stepsecret.arrayproject3.TabFragments.adapters.QueueAdapter;
+import xyz.stepsecret.arrayproject3.TabFragments.models.QueueModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,15 +90,21 @@ public class QueueFragment extends Fragment {
     }
 
     private void prepareMovieData() {
-        QueueModel queues = new QueueModel("1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
+
+        String[] alert = new String[]{
+                "05/12/2016 12:32:22 A010 Your Queue is on service.",
+                "05/12/2016 12:26:26 A010 5 Queue to go." ,
+                "05/12/2016 12:01:13 Thank you for registed. You Queue is A010 - 6 waiting queue (30 min)"};
+
+        QueueModel queues = new QueueModel(alert,"1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
+        queueList.add(queues);
+
+  /*    queues = new QueueModel("1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
         queueList.add(queues);
 
         queues = new QueueModel("1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
         queueList.add(queues);
 
-        queues = new QueueModel("1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
-        queueList.add(queues);
- /*
         queues = new QueueModel("Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "2", "http://stepsecret.xyz/standingupman.png");
         queueList.add(queues);
 
