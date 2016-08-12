@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_settings">ตั้งค่า</string>
+    <string name="Gender_choose">เพศ</string>
+    <string-array name="gender">
+        <item>ชาย</item>
+        <item>หญิง</item>
+    </string-array>
+
+    <string name="promotion">โปรโมชั่น</string>
+    <string name="favorite">ชื่นชอบ</string>
+    <string name="email">อีเมล์</string>
+    <string name="username">ชื่อผู้ใช้</string>
+    <string name="firstname">ชื่อ</string>
+    <string name="lastname">นามสกุล</string>
+    <string name="password">รหัสผ่าน</string>
+    <string name="repassword">รหัสผ่านอีกครั้ง</string>
+    <string name="create_account">ลงทะเบียน</string>
+    <string name="login">เข้าสู่ระบบ</string>
+    <string name="no_account">สมัครใช้งาน</string>
+    <string name="have_account">มีบัญชีแล้ว</string>
+    <string name="control">ควบคุม</string>
+    <string name="shop_search">ค้าหาร้านค้า</string>
+    <string name="branch_search">ค้าหาสาขา</string>
+    <string name="dateformate">ปปปป-ดด-วว</string>
+
+    <string name="message_alert">ข้อความ</string>
+    <string name="notification_alert">การแจ้งเตือน</string>
+    <string name="language">ภาษา</string>
+    <string name="sound">เสียง</string>
+    <string name="vibrate">สั้น</string>
+    <string name="logout">ออกจากระบบ</string>
+
+
+</resources>
