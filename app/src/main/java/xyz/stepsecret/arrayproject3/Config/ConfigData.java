@@ -7,4 +7,5 @@ package xyz.stepsecret.arrayproject3.Config;
 public class ConfigData {
 
     public static String API = "https://stepsecret.xyz";
+
 }

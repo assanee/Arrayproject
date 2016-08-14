@@ -4,29 +4,31 @@ package xyz.stepsecret.arrayproject3.TabFragments.models;
  * Created by Lincoln on 15/01/16.
  */
 public class QueueModel {
-    private String current_queue_table, namebrand, current_queue, current_queue_number, wait_time, firstname, lastname, date, time, queue, number, logo_brand;
+    private String current_queue_table, name_brand, name_branch, current_queue, current_queue_number, wait_time, wait_queue, firstname, lastname, date, time, queue, number_book, logo_brand;
     private String[] alert;
     public QueueModel() {
     }
 
-    public QueueModel(String[] alert,String current_queue_table, String namebrand, String current_queue, String current_queue_number, String wait_time, String firstname, String lastname, String date, String time, String queue, String number, String logo_brand) {
+    public QueueModel(String[] alert,String current_queue_table, String name_brand, String name_branch, String current_queue, String current_queue_number, String wait_time, String wait_queue, String firstname, String lastname, String date, String time, String queue, String number_book, String logo_brand) {
         this.current_queue_table = current_queue_table;
-        this.namebrand = namebrand;
+        this.name_brand = name_brand;
+        this.name_branch = name_branch;
         this.current_queue = current_queue;
         this.current_queue_number = current_queue_number;
         this.wait_time = wait_time;
+        this.wait_queue = wait_queue;
         this.firstname = firstname;
         this.lastname = lastname;
         this.date = date;
         this.time = time;
         this.queue = queue;
-        this.number = number;
+        this.number_book = number_book;
         this.logo_brand = logo_brand;
         this.alert = alert;
     }
 
     public String getCurrent_queue_table() {
-        return namebrand;
+        return name_brand;
     }
 
     public void setCurrent_queue_table(String current_queue_table) {
@@ -34,11 +36,19 @@ public class QueueModel {
     }
 
     public String getNamebrand() {
-        return namebrand;
+        return name_brand;
     }
 
-    public void setNamebrand(String namebrand) {
-        this.namebrand = namebrand;
+    public void setNamebrand(String name_brand) {
+        this.name_brand = name_brand;
+    }
+
+    public String getNamebranch() {
+        return name_branch;
+    }
+
+    public void setNamebranch(String name_branch) {
+        this.name_branch = name_branch;
     }
 
     public String getCurrent_queue() {
@@ -65,6 +75,14 @@ public class QueueModel {
         this.wait_time = wait_time;
     }
 
+    public String getWait_queue() {
+        return wait_queue;
+    }
+
+    public void setWait_queue(String wait_queue) {
+        this.wait_queue = wait_queue;
+    }
+
     public String getDate() {
         return date;
     }
@@ -89,12 +107,12 @@ public class QueueModel {
         this.time = time;
     }
 
-    public String getNumber() {
-        return number;
+    public String getNumberBook() {
+        return number_book;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setNumberBook(String number_book) {
+        this.number_book = number_book;
     }
 
 

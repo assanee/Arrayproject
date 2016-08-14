@@ -54,17 +54,7 @@ public class ProRecyclerViewDataAdapter extends RecyclerView.Adapter<ProRecycler
 
         itemRowHolder.recycler_view_list.setNestedScrollingEnabled(false);
 
-        itemRowHolder.btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                Toast.makeText(v.getContext(), "click event on more, "+sectionName , Toast.LENGTH_SHORT).show();
-
-
-
-            }
-        });
 
     }
 
@@ -88,7 +78,7 @@ public class ProRecyclerViewDataAdapter extends RecyclerView.Adapter<ProRecycler
 
             this.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
             this.recycler_view_list = (RecyclerView) view.findViewById(R.id.recycler_view_list);
-            this.btnMore= (Button) view.findViewById(R.id.btnMore);
+
 
 
         }

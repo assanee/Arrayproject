@@ -43,7 +43,7 @@ public class HomeRecyclerViewDataAdapter extends RecyclerView.Adapter<HomeRecycl
 
         ArrayList singleSectionItems = dataList.get(i).getAllItemsInSection();
 
-        itemRowHolder.itemTitle.setText(sectionName);
+        itemRowHolder.tv_name_section.setText(sectionName);
 
         HomeSectionListDataAdapter itemListDataAdapter = new HomeSectionListDataAdapter(mContext, singleSectionItems);
 
@@ -75,17 +75,6 @@ public class HomeRecyclerViewDataAdapter extends RecyclerView.Adapter<HomeRecycl
             }
         });*/
 
-        itemRowHolder.btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Toast.makeText(v.getContext(), "click event on more, "+sectionName , Toast.LENGTH_SHORT).show();
-
-
-
-            }
-        });
 
 
 
@@ -108,20 +97,19 @@ public class HomeRecyclerViewDataAdapter extends RecyclerView.Adapter<HomeRecycl
 
     public class ItemRowHolder extends RecyclerView.ViewHolder {
 
-        protected TextView itemTitle;
+        protected TextView tv_name_section;
 
         protected RecyclerView recycler_view_list;
 
-        protected Button btnMore;
 
 
 
         public ItemRowHolder(View view) {
             super(view);
 
-            this.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
+            this.tv_name_section = (TextView) view.findViewById(R.id.tv_name_section);
             this.recycler_view_list = (RecyclerView) view.findViewById(R.id.recycler_view_list);
-            this.btnMore= (Button) view.findViewById(R.id.btnMore);
+
 
 
         }

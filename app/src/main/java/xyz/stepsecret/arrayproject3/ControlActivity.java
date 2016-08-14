@@ -1,18 +1,22 @@
 package xyz.stepsecret.arrayproject3;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,6 +27,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.Locale;
 
 import xyz.stepsecret.arrayproject3.Badge.Utils;
+import xyz.stepsecret.arrayproject3.Form.LoginActivity;
 import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 /**
@@ -35,6 +40,7 @@ public class ControlActivity extends AppCompatActivity {
     private ImageView img_message, img_notification, img_language;
     private RadioGroup rg_message, rg_notification, rg_language;
     private AppCompatRadioButton radio_s1, radio_s2, radio_s3, radio_v1, radio_v2, radio_v3;
+    private AppCompatButton btn_logout;
 
     private TinyDB Store_data;
 
@@ -57,6 +63,8 @@ public class ControlActivity extends AppCompatActivity {
         img_message = (ImageView) findViewById(R.id.img_message);
         img_notification = (ImageView) findViewById(R.id.img_notification);
         img_language = (ImageView) findViewById(R.id.img_language);
+
+        btn_logout = (AppCompatButton) findViewById(R.id.btn_logout);
 
         rg_message = (RadioGroup) findViewById(R.id.rg_message);
         rg_notification = (RadioGroup) findViewById(R.id.rg_notification);
@@ -146,6 +154,15 @@ public class ControlActivity extends AppCompatActivity {
                     default:
                         break;
                 }
+            }
+        });
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Confirm_Logout();
+
             }
         });
 
@@ -269,5 +286,43 @@ public class ControlActivity extends AppCompatActivity {
         }
 
         //return super.onOptionsItemSelected(item);
+    }
+
+    public void Confirm_Logout()
+    {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(getResources().getString(R.string.logout));
+        dialog.setIcon(R.mipmap.ic_launcher);
+        dialog.setCancelable(true);
+        dialog.setMessage(getResources().getString(R.string.ask_logout));
+        dialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                Logout();
+            }
+        });
+
+        dialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+
+    public void Logout()
+    {
+
+                Store_data.clear();
+
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+
+
+
     }
 }

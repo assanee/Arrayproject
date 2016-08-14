@@ -35,12 +35,23 @@
                     android:id="@+id/tv_name_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/logo_branch"
+                    android:layout_below="@id/img_brand"
                     android:gravity="center"
-                    android:padding="5dp"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="0dp" />
 
+                <TextView
+                    android:id="@+id/tv_name_brand_branch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name_brand"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="13sp" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -65,12 +76,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" CURRENT QUEUE "
+                            android:text="@string/current_queue"
                             android:id="@+id/textView"
                             android:textSize="10dp"
                             android:background="#000000"
                             android:textColor="#FFFFFF"
-                            />
+                            android:padding="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -141,7 +152,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Waiting Queue"
+                            android:text="@string/waiting_queue"
                             android:id="@+id/textView5"
                             android:textSize="15dp"
                             />
@@ -210,7 +221,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="YOUR"
+                        android:text="@string/_your"
                         android:id="@+id/textView8"
                         android:textColor="@color/white"
                         android:textSize="30dp" />
@@ -218,7 +229,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="QUEUE"
+                        android:text="@string/_queue"
                         android:id="@+id/textView9"
                         android:textColor="@color/white"
                         android:textSize="30dp" />
@@ -226,21 +237,21 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date/Time"
+                        android:text="@string/date_time"
                         android:id="@+id/textView10"
                         android:paddingTop="10dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="dd/mm/yyyy"
+                        android:text="@string/ddmmyyyy"
                         android:id="@+id/tv_datetimes"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="hh:mm:ss"
+                        android:text="@string/hhmmss"
                         android:id="@+id/tv_times"
                         />
 
@@ -330,7 +341,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Firstname Lastname"
                         android:id="@+id/tv_name" />
 
                 </LinearLayout>

@@ -12,7 +12,7 @@ import xyz.stepsecret.arrayproject3.Model.Signup_Model;
 public interface Signup_API {
 
     @FormUrlEncoded
-    @POST("/Array/v1/register")
+    @POST("/array/v1/register")
     public void SignUP(@Field("username") String name, @Field("first_name") String first_name,
                        @Field("last_name") String last_name, @Field("birthday") String birthday,
                        @Field("gender") String gender, @Field("email") String email,

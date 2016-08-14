@@ -1,5 +1,6 @@
 package xyz.stepsecret.arrayproject3;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.LayerDrawable;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import xyz.stepsecret.arrayproject3.Badge.Utils;
+import xyz.stepsecret.arrayproject3.TabFragments.AllPromotionFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.HomeFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.PromotionFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.ShopFragment;
@@ -50,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        actionBar = getSupportActionBar();
         //actionBar.setTitle("Home");
         //actionBar.setDisplayHomeAsUpEnabled(true); // show <------
        // actionBar.setDisplayHomeAsUpEnabled(false);
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFrag(new HomeFragment(), "Home");
         adapter.addFrag(new ShopFragment(), "Shop");
         adapter.addFrag(new QueueFragment(), "My queue");
-        adapter.addFrag(new PromotionFragment(), "Promotion");
+        adapter.addFrag(new AllPromotionFragment(), "Promotion");
         viewPager.setAdapter(adapter);
 
     }
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         LayerDrawable mail_icon = (LayerDrawable) mail.getIcon();
 
         // Actualizar el contador
+
         Utils.setBadgeCount(this, control_icon, 3);
         Utils.setBadgeCount(this, mail_icon, 3);
 
@@ -146,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
             Utils.setBadgeCount(this, control_icon, 0);
 
+            Intent intent = new Intent(this, ControlActivity.class);
+            startActivity(intent);
+
 
             return true;
         }
@@ -153,7 +158,12 @@ public class MainActivity extends AppCompatActivity {
             Log.e(" menu "," mail ");
 
             LayerDrawable mail_icon = (LayerDrawable) item.getIcon();
+
+
             Utils.setBadgeCount(this, mail_icon, 0);
+
+            Intent intent = new Intent(this, MessageActivity.class);
+            startActivity(intent);
 
             return true;
         }

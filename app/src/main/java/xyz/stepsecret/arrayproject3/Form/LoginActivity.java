@@ -1,5 +1,7 @@
 package xyz.stepsecret.arrayproject3.Form;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.Bind;
@@ -34,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private TinyDB Store_data;
 
+    private String temp_language;
+
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
@@ -43,8 +53,55 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ButterKnife.bind(this);
+
+
+
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                //Toast.makeText(LoginActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                //Toast.makeText(LoginActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        };
+
+
+        new TedPermission(this)
+                .setPermissionListener(permissionlistener)
+                .setRationaleMessage("we need permission for write external storage and find your location")
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setGotoSettingButtonText("Go to setting")
+                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                .check();
+
+
         Store_data = new TinyDB(getApplicationContext());
+
+        temp_language = Store_data.getString("language");
+        if(temp_language != null && !temp_language.isEmpty())
+        {
+            setLanguage(temp_language);
+        }
+        else
+        {
+
+
+            Store_data.putString("message", "sound");
+            Store_data.putString("notification", "sound");
+            Store_data.putString("language", "en");
+            Store_data.putInt("number_message", 0);
+
+            setLanguage("en");
+        }
+
 
         Check_login();
 
@@ -73,12 +130,12 @@ public class LoginActivity extends AppCompatActivity {
     {
         Boolean login = Store_data.getBoolean("login", false);
 
-        //if(login==true)
-        //{
+        if(login==true)
+        {
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             finish();
-        //}
+        }
     }
 
     public void login() {
@@ -150,6 +207,21 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void setLanguage(String language)
+    {
+
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        //config.setLocale(locale); // api 17
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
+        //Store_data.putString("language", language);
+
     }
 
     public void show_failure(String message)

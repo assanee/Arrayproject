@@ -11,6 +11,8 @@
 
     <string name="promotion">Promotion</string>
     <string name="favorite">Favorite Restaurent</string>
+    <string name="history">History Restaurent</string>
+    <string name="near">List Shop Nearby</string>
     <string name="email">E-mail</string>
     <string name="username">Username</string>
     <string name="firstname">First name</string>
@@ -32,5 +34,21 @@
     <string name="sound">Sound</string>
     <string name="vibrate">Vibrate</string>
     <string name="logout">Logout</string>
+
+
+    <string name="current_queue">CURRENT QUEUE</string>
+    <string name="waiting_queue">Waiting Queue</string>
+    <string name="time_wait">Est. time wait (min.)</string>
+    <string name="_your">YOUR</string>
+    <string name="_queue">QUEUE</string>
+    <string name="date_time">Date/Time</string>
+    <string name="ddmmyyyy">dd/mm/yyyy</string>
+    <string name="hhmmss">hh:mm:ss</string>
+
+    <string name="ask_logout">Do you want to logout ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="map">Map</string>
 
 </resources>

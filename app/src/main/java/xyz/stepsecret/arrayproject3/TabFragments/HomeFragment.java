@@ -47,30 +47,71 @@ public class HomeFragment extends Fragment {
 
         my_recycler_view.setAdapter(adapter);
 
-        createDummyData();
+        FavoriteData();
+        HistoryData();
+        PromotionData();
 
         return v;
     }
-    public void createDummyData() {
-        for (int i = 1; i <= 3; i++) {
 
-            HomeSectionDataModel dm = new HomeSectionDataModel();
+    public void FavoriteData()
+    {
+        HomeSectionDataModel dm = new HomeSectionDataModel();
 
-            dm.setHeaderTitle("Section " + i);
+        dm.setHeaderTitle(getResources().getString(R.string.favorite));
 
-            ArrayList<HomeSingleItemModel> singleItem = new ArrayList<HomeSingleItemModel>();
-            for (int j = 0; j <= 10; j++) {
-                singleItem.add(new HomeSingleItemModel("id = "+i,"Item " + j, "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
-            }
-
-            dm.setAllItemsInSection(singleItem);
-
-
-            allSampleData.add(dm);
-
-
+        ArrayList<HomeSingleItemModel> singleItem = new ArrayList<HomeSingleItemModel>();
+        for (int j = 0; j <= 10; j++) {
+            singleItem.add(new HomeSingleItemModel(""+j,"XeusLab", "Branch", "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
         }
+
+        dm.setAllItemsInSection(singleItem);
+
+
+        allSampleData.add(dm);
+
+
     }
+
+    public void HistoryData()
+    {
+        HomeSectionDataModel dm = new HomeSectionDataModel();
+
+        dm.setHeaderTitle(getResources().getString(R.string.history));
+
+        ArrayList<HomeSingleItemModel> singleItem = new ArrayList<HomeSingleItemModel>();
+        for (int j = 0; j <= 10; j++) {
+            singleItem.add(new HomeSingleItemModel(""+j,"XeusLab", "Branch", "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
+        }
+
+        dm.setAllItemsInSection(singleItem);
+
+
+        allSampleData.add(dm);
+
+
+    }
+
+    public void PromotionData()
+    {
+        HomeSectionDataModel dm = new HomeSectionDataModel();
+
+        dm.setHeaderTitle(getResources().getString(R.string.promotion));
+
+        ArrayList<HomeSingleItemModel> singleItem = new ArrayList<HomeSingleItemModel>();
+        for (int j = 0; j <= 10; j++) {
+            singleItem.add(new HomeSingleItemModel(""+j,"XeusLab", "Branch", "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
+        }
+
+        dm.setAllItemsInSection(singleItem);
+
+
+        allSampleData.add(dm);
+
+
+    }
+
+
 
 
 }

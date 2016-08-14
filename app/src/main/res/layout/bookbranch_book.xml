@@ -1,15 +1,284 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="xyz.stepsecret.arrayproject3.TabFragments.OneFragment">
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:background="?android:selectableItemBackground"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_brand"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nodownload"
+                android:padding="5dp" />
+
+
+            <TextView
+                android:id="@+id/tv_name_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_brand"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:text="Brand" />
+
+            <TextView
+                android:id="@+id/tv_name_brand_branch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_brand"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:text="Branch" />
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ln_1"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Waiting Queue"
+                        android:textSize="15dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/img_table12"
+                        android:src="@drawable/table"
+                        android:layout_gravity="right"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Est. time wait (min.)"
+                        android:textSize="10dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/img_wait_queue1"
+                        android:src="@drawable/queue0"
+                        android:padding="10dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/tv_wait_time1"
+                        android:textSize="20dp"
+                        android:textColor="@color/holo_orange"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:background="#000000"
+            android:padding="5dp"
+            > </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ln_2"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/img_table34"
+                    android:src="@drawable/table"
+                    android:padding="10dp"
+                    />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/img_wait_queue2"
+                        android:src="@drawable/queue0"
+                        android:padding="10dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/tv_wait_time2"
+                        android:textSize="20dp"
+                        android:textColor="@color/holo_orange"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:background="#000000"
+            android:padding="5dp"
+            > </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ln_3"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/img_table6up"
+                    android:src="@drawable/table"
+
+                    android:padding="10dp"
+                    />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/img_wait_queue3"
+                        android:src="@drawable/queue0"
+                        android:padding="10dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/tv_wait_time3"
+                        android:textSize="20dp"
+                        android:textColor="@color/holo_orange"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="one"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+        android:text="Number of Seat(s)"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp" />
 
-</RelativeLayout>
+    <EditText
+        android:layout_width="108dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30dp"
+        android:text="0" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RESERVE NOW"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

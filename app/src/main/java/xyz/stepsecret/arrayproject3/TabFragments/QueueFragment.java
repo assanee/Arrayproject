@@ -104,7 +104,7 @@ public class QueueFragment extends Fragment {
                 "05/12/2016 12:26:26 A010 5 Queue to go." ,
                 "05/12/2016 12:01:13 Thank you for registed. You Queue is A010 - 6 waiting queue (30 min)"};
 
-        QueueModel queues = new QueueModel(alert,"1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
+        QueueModel queues = new QueueModel(alert,"1-2", "Xeuslab", "branch", "A009", "3", "30", "9", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");
         queueList.add(queues);
 
   /*    queues = new QueueModel("1-2", "Xeuslab", "A009", "3", "30", "Assanee", "Saksiritantawan", "5/12/2016", "12:00:00", "A010", "200", "http://stepsecret.xyz/standingupman.png");

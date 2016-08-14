@@ -1,5 +1,6 @@
 package xyz.stepsecret.arrayproject3.Form;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,7 @@ public class SignupActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ButterKnife.bind(this);
 
         _signupButton.setOnClickListener(new View.OnClickListener() {

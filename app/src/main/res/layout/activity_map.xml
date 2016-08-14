@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+
+        <android.support.v7.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp">
+
+
+                <SearchView
+                    android:id="@+id/search_shop"
+                    android:layout_width="match_parent"
+                    android:elevation="2dp"
+                    android:background="#fff"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/img_map"
+                    android:layout_toStartOf="@+id/img_map">
+                </SearchView>
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true">
+
+            <com.google.android.gms.maps.MapView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mapView" />
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
+
+

@@ -1,31 +1,27 @@
 package xyz.stepsecret.arrayproject3.TabFragments;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
+import xyz.stepsecret.arrayproject3.MapActivity;
+import xyz.stepsecret.arrayproject3.MessageActivity;
 import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.adapters.ShopRecyclerViewDataAdapter;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ShopSectionDataModel;
@@ -34,11 +30,16 @@ import xyz.stepsecret.arrayproject3.TabFragments.models.ShopSingleItemModel;
 /**
  * Created by iFocus on 27-10-2015.
  */
-public class ShopFragment extends Fragment implements OnMapReadyCallback , GoogleMap.OnMyLocationButtonClickListener {
+public class ShopFragment extends Fragment {
 
-    public GoogleMap gMap;
-    public MapView mMap;
-    ArrayList<ShopSectionDataModel> allSampleData;
+
+    private ArrayList<ShopSectionDataModel> allSampleData;
+
+    private SearchView search_shop;
+    private SearchView search_branch;
+    private RecyclerView my_recycler_view;
+    private ShopRecyclerViewDataAdapter adapter;
+    private ImageView img_map;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,23 +55,79 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback , Googl
         View v = inflater.inflate(R.layout.shop_fragment, container, false);
 
 
-        mMap = (MapView) v.findViewById(R.id.mapView);
-        mMap.onCreate(savedInstanceState);
-        mMap.getMapAsync(this);
-
-
-
         allSampleData = new ArrayList<ShopSectionDataModel>();
-        RecyclerView my_recycler_view = (RecyclerView) v.findViewById(R.id.shop_my_recycler_view);
+        search_shop = (SearchView) v.findViewById(R.id.search_shop);
+        search_branch = (SearchView) v.findViewById(R.id.search_branch);
+
+        my_recycler_view = (RecyclerView) v.findViewById(R.id.shop_my_recycler_view);
+
+        img_map = (ImageView) v.findViewById(R.id.img_map);
 
         my_recycler_view.setHasFixedSize(true);
 
-        ShopRecyclerViewDataAdapter adapter = new ShopRecyclerViewDataAdapter(getContext(), allSampleData);
+        adapter = new ShopRecyclerViewDataAdapter(getContext(), allSampleData);
 
         my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         //my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         my_recycler_view.setAdapter(adapter);
+
+
+        search_shop.setQueryHint(getResources().getString(R.string.shop_search));
+        search_branch.setQueryHint(getResources().getString(R.string.branch_search));
+        search_branch.setVisibility(View.GONE);
+
+        search_shop.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+                search_branch.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+
+        search_branch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+
+        Glide.with(this)
+                .load(R.drawable.map)
+                .placeholder(R.drawable.nodownload)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(img_map);
+
+
+
+        img_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), MapActivity.class);
+                startActivity(intent);
+                //finish();
+
+            }
+        });
 
         createFavorite();
         createNear();
@@ -83,7 +140,7 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback , Googl
 
             ShopSectionDataModel dm = new ShopSectionDataModel();
 
-            dm.setHeaderTitle("Favorite");
+            dm.setHeaderTitle(getResources().getString(R.string.favorite));
 
             ArrayList<ShopSingleItemModel> singleItem = new ArrayList<ShopSingleItemModel>();
             for (int j = 0; j <= 10; j++) {
@@ -104,7 +161,7 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback , Googl
 
             ShopSectionDataModel dm = new ShopSectionDataModel();
 
-            dm.setHeaderTitle("List shop nearby");
+            dm.setHeaderTitle(getResources().getString(R.string.near));
 
             ArrayList<ShopSingleItemModel> singleItem = new ArrayList<ShopSingleItemModel>();
             for (int j = 0; j <= 10; j++) {
@@ -121,62 +178,5 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback , Googl
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMap.onResume();
-
-
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMap.onPause();
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMap.onDestroy();
-
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMap.onLowMemory();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // Do something with Google Map
-
-        MapsInitializer.initialize(getContext());
-        gMap = googleMap;
-        gMap.setOnMyLocationButtonClickListener(this);
-
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            gMap.setMyLocationEnabled(true);
-        } else {
-            // Show rationale and request permission.
-        }
-
-
-
-        Log.e(" Shop ","onMapReady");
-    }
-
-    @Override
-    public boolean onMyLocationButtonClick() {
-
-        Log.e(" Shop ","onMyLocationButtonClick");
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false;
-    }
 
 }

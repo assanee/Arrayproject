@@ -17,8 +17,6 @@ import xyz.stepsecret.arrayproject3.TabFragments.models.HomeSectionDataModel;
 import xyz.stepsecret.arrayproject3.TabFragments.models.HomeSingleItemModel;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ProSectionDataModel;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ProSingleItemModel;
-import xyz.stepsecret.arrayproject3.TabFragments.models.ProSubSectionDataModel;
-import xyz.stepsecret.arrayproject3.TabFragments.models.ProSubSingleItemModel;
 
 /**
  * Created by iFocus on 27-10-2015.
@@ -26,7 +24,6 @@ import xyz.stepsecret.arrayproject3.TabFragments.models.ProSubSingleItemModel;
 public class PromotionFragment extends Fragment {
 
     ArrayList<ProSectionDataModel> allSampleData;
-    ArrayList<ProSubSectionDataModel> allSampleDataSub;
 
 
     @Override
@@ -40,7 +37,6 @@ public class PromotionFragment extends Fragment {
         // Inflate the layout for this fragment
 
         allSampleData = new ArrayList<ProSectionDataModel>();
-        allSampleDataSub = new ArrayList<ProSubSectionDataModel>();
 
 
         View v = inflater.inflate(R.layout.promotion_fragment, container, false);
@@ -77,24 +73,6 @@ public class PromotionFragment extends Fragment {
             dm.setAllItemsInSection(singleItem);
 
             allSampleData.add(dm);
-
-        for (int i = 1; i <= 10; i++) {
-
-        ProSubSectionDataModel dm1 = new ProSubSectionDataModel();
-
-        dm.setHeaderTitle("Section " + 1);
-
-        ArrayList<ProSubSingleItemModel> singleItem1 = new ArrayList<ProSubSingleItemModel>();
-
-            singleItem1.add(new ProSubSingleItemModel("id = "+1,"Item+ " + 1, "http://www.exotictheme.com/wp-content/uploads/2015/11/food-logo.png"));
-
-
-        dm1.setAllItemsInSection(singleItem1);
-
-        allSampleDataSub.add(dm1);
-
-
-         }
 
 
        // }

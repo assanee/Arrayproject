@@ -10,6 +10,8 @@
 
     <string name="promotion">โปรโมชั่น</string>
     <string name="favorite">ชื่นชอบ</string>
+    <string name="history">ร้านเดิมๆ</string>
+    <string name="near">ร้านใกล้ๆ</string>
     <string name="email">อีเมล์</string>
     <string name="username">ชื่อผู้ใช้</string>
     <string name="firstname">ชื่อ</string>
@@ -32,5 +34,19 @@
     <string name="vibrate">สั้น</string>
     <string name="logout">ออกจากระบบ</string>
 
+    <string name="current_queue">คิวปัจจุบัน</string>
+    <string name="waiting_queue">จำนวนคิวที่รอ</string>
+    <string name="time_wait">เวลาที่รอ (นาที)</string>
+    <string name="_your">คิว</string>
+    <string name="_queue">ของคุณ</string>
+    <string name="date_time">วันที่/เวลา</string>
+    <string name="ddmmyyyy">วว/ดด/ปปปป</string>
+    <string name="hhmmss">ชม:นท:วน</string>
+
+    <string name="ask_logout">คุณต้องการออกจากระบบ ?</string>
+    <string name="yes">ใช่</string>
+    <string name="no">ไม่ใช่</string>
+
+    <string name="map">แผนที่</string>
 
 </resources>

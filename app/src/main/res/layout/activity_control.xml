@@ -234,7 +234,7 @@
             android:layout_gravity="center_horizontal">
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_logout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"

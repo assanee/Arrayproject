@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +34,8 @@ public class AllPromotionFragment extends Fragment {
     private List<AllPromotionModel> AllPromotionList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AllPromotionAdapter mAdapter;
-    //private ImageView img_brand;
-    //private TextView tv_brand;
-    //SwipeRefreshLayout mSwipeRefreshLayout;
+    private SearchView search_shop;
+    private SearchView search_branch;
 
 
 
@@ -49,16 +49,12 @@ public class AllPromotionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
-
-
         View v = inflater.inflate(R.layout.allpromotion_content, container, false);
 
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
-
-        //img_brand = (ImageView) v.findViewById(R.id.img_brand);
-        //tv_brand = (TextView) v.findViewById(R.id.tv_name_brand);
+        search_shop = (SearchView) v.findViewById(R.id.search_shop);
+        search_branch = (SearchView) v.findViewById(R.id.search_branch);
 
         mAdapter = new AllPromotionAdapter(getContext(),AllPromotionList);
 
@@ -87,15 +83,42 @@ public class AllPromotionFragment extends Fragment {
             }
         }));
 
-       /* Glide.with(this)
-                .load("https://stepsecret.xyz/logo xues lab.png")
-                .placeholder(R.drawable.nodownload)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(img_brand);
 
-        tv_brand.setText("XEUS LAB");
-*/
+        search_shop.setQueryHint(getResources().getString(R.string.shop_search));
+        search_branch.setQueryHint(getResources().getString(R.string.branch_search));
+        search_branch.setVisibility(View.GONE);
+
+        search_shop.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+                search_branch.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+
+        search_branch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
 
         clearData();
         prepareMovieData();
@@ -110,7 +133,6 @@ public class AllPromotionFragment extends Fragment {
 
     private void prepareMovieData() {
 
-       // mAdapter.re
 
         String id = "1";
         String Logo = "https://stepsecret.xyz/logo xues lab.png";

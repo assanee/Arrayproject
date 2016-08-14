@@ -1,12 +1,12 @@
 package xyz.stepsecret.arrayproject3;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.stepsecret.arrayproject3.TabFragments.OneFragment;
-import xyz.stepsecret.arrayproject3.TabFragments.TwoFragment;
+import xyz.stepsecret.arrayproject3.TabFragments.BranchPromotionFragment;
+import xyz.stepsecret.arrayproject3.TabFragments.BookFragment;
 
 /**
  * Created by stepsecret on 5/8/2559.
@@ -30,6 +30,7 @@ public class BookBranch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_branch);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,12 +48,13 @@ public class BookBranch extends AppCompatActivity {
 
 
 
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "BOOK");
-        adapter.addFragment(new TwoFragment(), "BRANCH PROMOTIONS");
+        adapter.addFragment(new BookFragment(), "BOOK");
+        adapter.addFragment(new BranchPromotionFragment(), "BRANCH PROMOTIONS");
         viewPager.setAdapter(adapter);
     }
 
