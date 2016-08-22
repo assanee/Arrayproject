@@ -1,5 +1,7 @@
 package xyz.stepsecret.arrayproject3.TabFragments.models;
 
+import xyz.stepsecret.arrayproject3.Config.ConfigData;
+
 /**
  * Created by pratap.kesaboyina on 01-12-2015.
  */
@@ -9,18 +11,22 @@ public class HomeSingleItemModel {
     private String name_brand;
     private String name_branch;
     private String url;
+    private String view_type;
     private String description;
     private String id;
+    private String id_branch;
 
 
     public HomeSingleItemModel() {
     }
 
-    public HomeSingleItemModel(String id, String name_brand, String name_branch, String url) {
+    public HomeSingleItemModel(String id, String id_branch, String name_brand, String name_branch, String url, String view_type) {
         this.id = id;
+        this.id_branch = id_branch;
         this.name_brand = name_brand;
         this.name_branch = name_branch;
         this.url = url;
+        this.view_type = view_type;
     }
 
 
@@ -30,6 +36,14 @@ public class HomeSingleItemModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdbranch() {
+        return id_branch;
+    }
+
+    public void setIdbranch(String id_branch) {
+        this.id_branch = id_branch;
     }
 
     public String getUrl() {
@@ -62,6 +76,15 @@ public class HomeSingleItemModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String getViewType() {
+        return view_type;
+    }
+
+    public void setViewType(String view_type) {
+        this.view_type = view_type;
     }
 
 

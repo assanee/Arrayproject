@@ -7,6 +7,7 @@ package xyz.stepsecret.arrayproject3.TabFragments.adapters;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ public class HomeRecyclerViewDataAdapter extends RecyclerView.Adapter<HomeRecycl
     public ItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_item, null);
         ItemRowHolder mh = new ItemRowHolder(v);
+
+        Log.e(" HomeRecycler "," >>>> "+i);
         return mh;
     }
 
@@ -55,39 +58,6 @@ public class HomeRecyclerViewDataAdapter extends RecyclerView.Adapter<HomeRecycl
         itemRowHolder.recycler_view_list.setNestedScrollingEnabled(false);
 
 
-       /*  itemRowHolder.recycler_view_list.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        //Allow ScrollView to intercept touch events once again.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                // Handle RecyclerView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-        });*/
-
-
-
-
-
-
-
-
-       /* Glide.with(mContext)
-                .load(feedItem.getImageURL())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .error(R.drawable.bg)
-                .into(feedListRowHolder.thumbView);*/
     }
 
     @Override

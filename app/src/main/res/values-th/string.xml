@@ -49,4 +49,16 @@
 
     <string name="map">แผนที่</string>
 
+    <string name="areyousure">คุณแน่ใจไหม?</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="cancelled">ยกเลิกดำเนินการ</string>
+    <string name="deleted">ดำเนินการสำเร็จ</string>
+    <string name="reserve">ดำเนินการสำเร็จ</string>
+    <string name="sure">ตกลง</string>
+    <string name="close">ปิด</string>
+
+    <string name="numberofseat">จำนวนที่นั่ง</string>
+    <string name="reservenow">จอง</string>
+
+
 </resources>

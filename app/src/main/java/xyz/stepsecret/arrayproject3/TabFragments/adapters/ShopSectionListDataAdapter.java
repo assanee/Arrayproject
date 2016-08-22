@@ -51,7 +51,7 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
 
         holder.id = singleItem.getId();
 
-
+        holder.id_branch = singleItem.getIdbranch();
 
        /* Picasso.with(mContext)
                 .load(singleItem.getUrl())
@@ -80,6 +80,7 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
 
         protected String id;
 
+        protected String id_branch;
 
         public SingleItemRowHolder(View view) {
             super(view);
@@ -94,12 +95,13 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
                 public void onClick(View v) {
 
 
-                    Toast.makeText(v.getContext(), tv_name_brand.getText()+" > "+getAdapterPosition()+" : "+id, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(), tv_name_brand.getText()+" > "+getAdapterPosition()+" : "+id, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, BookBranch.class);
+                    intent.putExtra("id_branch", id_branch);
                     mContext.startActivity(intent);
 
 
-                    Log.e(" Shop ","");
+                    //Log.e(" Shop ","");
 
                 }
             });

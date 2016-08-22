@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    android:orientation="vertical"
+<LinearLayout android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
     <android.support.v7.widget.CardView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:cardCornerRadius="5dp"
-        app:cardUseCompatPadding="true"
+        app:cardUseCompatPadding="true" 
+		app:cardElevation="0dp"
+
+
         >
 
         <LinearLayout
@@ -28,7 +31,6 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter"
-                android:src="@drawable/nodownload"
                 android:padding="5dp" />
 
 
@@ -41,6 +43,7 @@
                 android:padding="5dp"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
+
                 android:text="Brand" />
 
             <TextView
@@ -49,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name_brand"
                 android:gravity="center"
-                android:padding="5dp"
+                android:padding="3dp"
                 android:textColor="@android:color/black"
                 android:textSize="13sp"
                 android:text="Branch" />
@@ -65,7 +68,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:cardCornerRadius="5dp"
-        app:cardUseCompatPadding="true"
+        app:cardUseCompatPadding="true" 
+		app:cardElevation="0dp"
+
         >
 
         <LinearLayout
@@ -93,7 +98,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Waiting Queue"
+                        android:text="@string/waiting_queue"
                         android:textSize="15dp"
                         />
 
@@ -121,13 +126,14 @@
                     android:gravity="center"
                     android:layout_gravity="center_horizontal">
 
-                    <ImageView
-                        android:layout_width="50dp"
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:id="@+id/img_wait_queue1"
-                        android:src="@drawable/queue0"
-                        android:padding="10dp"
-                        />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="-"
+                        android:id="@+id/tv_wait_queue1"
+                        android:padding="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,7 +142,8 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/tv_wait_time1"
                         android:textSize="20dp"
-                        android:textColor="@color/holo_orange"/>
+                        android:textColor="@color/holo_orange"
+                        android:padding="3dp" />
 
 
                 </LinearLayout>
@@ -174,13 +181,13 @@
                     android:gravity="center"
                     android:layout_gravity="center_horizontal">
 
-                    <ImageView
-                        android:layout_width="50dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:id="@+id/img_wait_queue2"
-                        android:src="@drawable/queue0"
-                        android:padding="10dp"
-                        />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="-"
+                        android:id="@+id/tv_wait_queue2"
+                        android:padding="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,7 +196,8 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/tv_wait_time2"
                         android:textSize="20dp"
-                        android:textColor="@color/holo_orange"/>
+                        android:textColor="@color/holo_orange"
+                        android:padding="3dp" />
 
 
                 </LinearLayout>
@@ -228,13 +236,13 @@
                     android:gravity="center"
                     android:layout_gravity="center_horizontal">
 
-                    <ImageView
-                        android:layout_width="50dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:id="@+id/img_wait_queue3"
-                        android:src="@drawable/queue0"
-                        android:padding="10dp"
-                        />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="-"
+                        android:id="@+id/tv_wait_queue3"
+                        android:padding="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -243,7 +251,8 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/tv_wait_time3"
                         android:textSize="20dp"
-                        android:textColor="@color/holo_orange"/>
+                        android:textColor="@color/holo_orange"
+                        android:padding="3dp" />
 
 
                 </LinearLayout>
@@ -258,26 +267,53 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of Seat(s)"
+        android:text="@string/numberofseat"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
         android:textSize="25dp" />
 
-    <EditText
-        android:layout_width="108dp"
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30dp"
-        android:text="0" />
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/img_left"
+            android:src="@drawable/leftarrow"
+            android:padding="3dp" />
+
+        <EditText
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:id="@+id/edt_number"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="0" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/img_right"
+            android:src="@drawable/rightarrow"
+            android:padding="3dp" />
+
+
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RESERVE NOW"
-        android:id="@+id/button"
+        android:text="@string/reservenow"
+        android:id="@+id/btn_book"
         android:layout_gravity="center_horizontal" />
 
 

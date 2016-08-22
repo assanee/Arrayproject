@@ -1,6 +1,7 @@
 package xyz.stepsecret.arrayproject3;
 
 import android.content.pm.ActivityInfo;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,13 +10,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import xyz.stepsecret.arrayproject3.TabFragments.BranchPromotionFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.BookFragment;
+import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 /**
  * Created by stepsecret on 5/8/2559.
@@ -25,6 +30,10 @@ public class BookBranch extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String id_branch;
+
+
+    private TinyDB Store_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +53,17 @@ public class BookBranch extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
+        id_branch = getIntent().getExtras().getString("id_branch");
 
+        Store_data = new TinyDB(this);
 
+        Store_data.putString("id_branch",id_branch);
 
 
 
     }
+
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

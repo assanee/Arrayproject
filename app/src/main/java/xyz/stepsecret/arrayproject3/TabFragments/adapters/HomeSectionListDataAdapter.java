@@ -31,7 +31,7 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
 
     private ArrayList<HomeSingleItemModel> itemsList;
     private Context mContext;
-    private String id_shop;
+
 
     public HomeSectionListDataAdapter(Context context, ArrayList<HomeSingleItemModel> itemsList) {
         this.itemsList = itemsList;
@@ -40,9 +40,27 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
 
     @Override
     public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_single_card, null);
-        SingleItemRowHolder mh = new SingleItemRowHolder(v);
-        return mh;
+
+        HomeSingleItemModel singleItem = itemsList.get(i);
+        Log.e(" HomeSection "," >>>> "+i+" : "+singleItem.getViewType());
+
+
+        if(singleItem.getViewType().equals("normal"))
+        {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_single_card, null);
+            SingleItemRowHolder mh = new SingleItemRowHolder(v);
+            return mh;
+        }
+        else
+        {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_single_card_promotion, null);
+            SingleItemRowHolder mh = new SingleItemRowHolder(v);
+
+            return mh;
+        }
+
+
+
     }
 
     @Override
@@ -55,18 +73,13 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
 
         holder.id = singleItem.getId();
 
+        holder.id_branch = singleItem.getIdbranch();
 
+        holder.view_type = singleItem.getViewType();
 
-       /* Picasso.with(mContext)
-                .load(singleItem.getUrl())
-                .placeholder(R.drawable.nodownload)
-                .error(R.drawable.nodownload)
-                .into(holder.itemImage);
-*/
         Glide.with(mContext)
                 .load(singleItem.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
                 .error(R.drawable.nodownload)
                 .into(holder.logo_branch);
     }
@@ -84,6 +97,10 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
 
         protected String id;
 
+        protected String id_branch;
+
+        protected String view_type = "normal";
+
 
         public SingleItemRowHolder(View view) {
             super(view);
@@ -98,9 +115,8 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
                 @Override
                 public void onClick(View v) {
 
-                    //Toast.makeText(v.getContext(), tv_name_brand.getText()+" > "+getAdapterPosition()+" : "+id, Toast.LENGTH_SHORT).show();
-                    id_shop = id;
-                    Log.e(" Home1 ",id_shop+" : "+id);
+
+                    Log.e(" Home1 "," : "+id);
                     showPopupMenu(overflow);
 
                 }
@@ -110,11 +126,17 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
                 @Override
                 public void onClick(View v) {
 
+                    if(view_type.equals("normal"))
+                    {
+                        Intent intent = new Intent(mContext, BookBranch.class);
+                        intent.putExtra("id_branch", id_branch);
+                        mContext.startActivity(intent);
+                    }
+                    else
+                    {
+                        Log.e(" Home1 "," : "+view_type);
+                    }
 
-                    Toast.makeText(v.getContext(), tv_name_brand.getText()+" > "+getAdapterPosition()+" : "+id, Toast.LENGTH_SHORT).show();
-                    Log.e(" Home2 ",id_shop+" : "+id);
-                    Intent intent = new Intent(mContext, BookBranch.class);
-                    mContext.startActivity(intent);
 
                 }
             });
@@ -153,7 +175,7 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Add to favourite id : "+id_shop, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Add to favourite id : ", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
             }

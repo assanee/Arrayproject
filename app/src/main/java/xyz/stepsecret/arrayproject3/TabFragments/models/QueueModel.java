@@ -6,10 +6,12 @@ package xyz.stepsecret.arrayproject3.TabFragments.models;
 public class QueueModel {
     private String current_queue_table, name_brand, name_branch, current_queue, current_queue_number, wait_time, wait_queue, firstname, lastname, date, time, queue, number_book, logo_brand;
     private String[] alert;
+    private String id_queue;
     public QueueModel() {
     }
 
-    public QueueModel(String[] alert,String current_queue_table, String name_brand, String name_branch, String current_queue, String current_queue_number, String wait_time, String wait_queue, String firstname, String lastname, String date, String time, String queue, String number_book, String logo_brand) {
+    public QueueModel(String id_queue, String[] alert,String current_queue_table, String name_brand, String name_branch, String current_queue, String current_queue_number, String wait_time, String wait_queue, String firstname, String lastname, String date, String time, String queue, String number_book, String logo_brand) {
+        this.id_queue = id_queue;
         this.current_queue_table = current_queue_table;
         this.name_brand = name_brand;
         this.name_branch = name_branch;
@@ -27,8 +29,16 @@ public class QueueModel {
         this.alert = alert;
     }
 
+    public String getId_queue() {
+        return id_queue;
+    }
+
+    public void setId_queue(String id_queue) {
+        this.id_queue = id_queue;
+    }
+
     public String getCurrent_queue_table() {
-        return name_brand;
+        return current_queue_table;
     }
 
     public void setCurrent_queue_table(String current_queue_table) {

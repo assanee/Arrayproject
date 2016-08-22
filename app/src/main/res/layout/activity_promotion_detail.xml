@@ -35,7 +35,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -92,7 +93,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp">
 
             <android.support.percent.PercentRelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"

@@ -14,8 +14,20 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import xyz.stepsecret.arrayproject3.API.DeleteQueue_API;
+import xyz.stepsecret.arrayproject3.API.Queue_API;
+import xyz.stepsecret.arrayproject3.Config.ConfigData;
+import xyz.stepsecret.arrayproject3.Model.DeleteQueue_Model;
+import xyz.stepsecret.arrayproject3.Model.Queue_Model;
 import xyz.stepsecret.arrayproject3.R;
+import xyz.stepsecret.arrayproject3.TabFragments.QueueFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.models.QueueModel;
+import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder> {
 
@@ -23,9 +35,13 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
     private Context mContext;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, date, time, queue, number_book, name_brand, name_branch, current_queue, current_queue_number, wait_time, tv_alert1 ;
-        public ImageView img_person, img_brand, img_table, img_current_queue, img_wait_queue, img_delete;
+        public TextView name, date, time, queue, number_book, name_brand, name_branch, current_queue, current_queue_number, wait_time, tv_alert1 ,tv_wait_queue;
+        public ImageView img_person, img_brand, img_table, img_current_queue,  img_delete;
         public String temp_alert = "";
+        public String id_queue;
+        public RestAdapter restAdapter;
+        public TinyDB Store_data;
+
         public MyViewHolder(View view) {
             super(view);
 
@@ -35,6 +51,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
             current_queue_number = (TextView) view.findViewById(R.id.tv_current_queue_number);
             wait_time = (TextView) view.findViewById(R.id.tv_wait_time);
             tv_alert1 = (TextView) view.findViewById(R.id.tv_alert1);
+            tv_wait_queue = (TextView) view.findViewById(R.id.tv_wait_queue);
 
             name = (TextView) view.findViewById(R.id.tv_name);
             date = (TextView) view.findViewById(R.id.tv_datetimes);
@@ -46,13 +63,23 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
             img_brand = (ImageView) view.findViewById(R.id.img_brand);
             img_table = (ImageView) view.findViewById(R.id.img_table);
             img_current_queue = (ImageView) view.findViewById(R.id.img_current_queue);
-            img_wait_queue = (ImageView) view.findViewById(R.id.img_wait_queue);
             img_delete = (ImageView) view.findViewById(R.id.img_delete);
 
+            restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(ConfigData.API).build();
+
+            Store_data = new TinyDB(mContext);
 
 
-            //listView = (ListView) view.findViewById(R.id.listView1);
+
+
         }
+    }
+    public void show_failure(String message)
+    {
+        new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(message)
+                .show();
     }
 
 
@@ -71,21 +98,24 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        QueueModel movie = moviesList.get(position);
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final QueueModel movie = moviesList.get(position);
 
+        holder.id_queue = movie.getId_queue();
         holder.name_brand.setText(movie.getNamebrand());
         holder.name_branch.setText(movie.getNamebranch());
         holder.current_queue.setText(movie.getCurrent_queue());
         holder.current_queue_number.setText(movie.getCurrent_queue_number());
         holder.wait_time.setText(movie.getWait_time());
 
+        holder.temp_alert = "";
         for(int i = 0 ; i < movie.getAlert().length ; i++ )
         {
             holder.temp_alert = holder.temp_alert + "- "+movie.getAlert()[i] +"\n";
            // Log.e(" Queue ",i+" : "+movie.getAlert()[i]);
         }
         holder.tv_alert1.setText(holder.temp_alert);
+        holder.tv_wait_queue.setText(movie.getWait_queue());
 
         holder.date.setText(movie.getDate());
         holder.time.setText(movie.getTime());
@@ -95,7 +125,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
 
 
         Glide.with(mContext)
-                .load(R.drawable.xeuslab)
+                .load(movie.getLogoBrand())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .into(holder.img_brand);
@@ -112,14 +142,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
                 .centerCrop()
                 .into(holder.img_current_queue);
 
-        Glide.with(mContext)
-                .load(R.drawable.queue0)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(holder.img_wait_queue);
-
-        Log.e(" Queue ",""+movie.getWait_queue());
-
 
         Glide.with(mContext)
                 .load(R.drawable.deletebutton)
@@ -133,14 +155,79 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
                 .centerCrop()
                 .into(holder.img_table);
 
+        holder.img_delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-  /*Glide.with(mContext)
-                .load(movie.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .error(R.drawable.nodownload)
-                .into(holder.person);
-*/
+                Log.e(" Queue "," delete 222");
+                new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText(mContext.getResources().getString(R.string.areyousure))
+                        .setCancelText(mContext.getResources().getString(R.string.cancel))
+                        .setConfirmText(mContext.getResources().getString(R.string.sure))
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                                sDialog.setTitleText(mContext.getResources().getString(R.string.cancelled))
+                                        .setConfirmText(mContext.getResources().getString(R.string.close))
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(final SweetAlertDialog sDialog) {
+
+                                final DeleteQueue_API deleteQueue_api = holder.restAdapter.create(DeleteQueue_API.class);
+
+                                deleteQueue_api.DeleteQueue_API(holder.Store_data.getString("api_key"),holder.id_queue, new Callback<DeleteQueue_Model>() {
+                                    @Override
+                                    public void success(DeleteQueue_Model result, Response response) {
+
+                                        if(!result.getError()) {
+
+                                            sDialog.setTitleText(mContext.getResources().getString(R.string.deleted))
+                                                    .setConfirmText(mContext.getResources().getString(R.string.close))
+                                                    .showCancelButton(false)
+                                                    .setCancelClickListener(null)
+                                                    .setConfirmClickListener(null)
+                                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+
+
+                                            QueueFragment.clearData();
+                                        }
+                                        else
+                                        {
+                                            show_failure(result.getMessage());
+                                            Log.e(" TAG ","error");
+                                        }
+
+
+
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+
+                                        show_failure(error.getMessage());
+                                        Log.e(" TAG ","failure");
+
+                                    }
+                                });
+
+
+                            }
+                        })
+                        .show();
+
+            }
+        });
+
+
     }
 
     @Override

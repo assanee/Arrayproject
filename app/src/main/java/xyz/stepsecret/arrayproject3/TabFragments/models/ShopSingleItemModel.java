@@ -10,13 +10,15 @@ public class ShopSingleItemModel {
     private String name_brand_branch;
     private String url;
     private String id;
+    private String id_branch;
 
 
     public ShopSingleItemModel() {
     }
 
-    public ShopSingleItemModel(String id, String name_brand,String name_brand_branch, String url) {
+    public ShopSingleItemModel(String id, String id_branch, String name_brand,String name_brand_branch, String url) {
         this.id = id;
+        this.id_branch = id_branch;
         this.name_brand = name_brand;
         this.url = url;
         this.name_brand_branch = name_brand_branch;
@@ -29,6 +31,14 @@ public class ShopSingleItemModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdbranch() {
+        return id_branch;
+    }
+
+    public void setIdbranch(String id_branch) {
+        this.id_branch = id_branch;
     }
 
     public String getUrl() {

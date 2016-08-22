@@ -25,6 +25,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.Client;
 import retrofit.client.Response;
 import xyz.stepsecret.arrayproject3.API.Login_API;
 import xyz.stepsecret.arrayproject3.Config.ConfigData;
@@ -184,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                     Store_data.putString("firstname", result.getFirst_name());
                     Store_data.putString("lastname", result.getLast_name());
                     Store_data.putString("email", result.getEmail());
-                    Store_data.putString("apikey", result.getApiKey());
+                    Store_data.putString("api_key", result.getApiKey());
                     Store_data.putString("class", result.getClass_data());
 
                     Check_login();
@@ -230,6 +231,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setTitleText(message)
                 .show();
     }
+
     @Override
     public void onBackPressed() {
         // Disable going back to the MainActivity

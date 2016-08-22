@@ -12,7 +12,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true"
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp"
             >
 
             <LinearLayout
@@ -177,12 +178,15 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:id="@+id/img_wait_queue"
-                        android:padding="1dp"
-                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/tv_wait_queue"
+                        android:textColor="@color/holo_green"
+                        android:textSize="60dp"
+                        android:text="-" />
 
                 </LinearLayout>
 
@@ -199,7 +203,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true"
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp"
             >
 
             <LinearLayout
@@ -355,7 +360,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         app:cardCornerRadius="5dp"
-        app:cardUseCompatPadding="true"
+        app:cardUseCompatPadding="true" 
+		app:cardElevation="0dp"
         >
 
         <LinearLayout

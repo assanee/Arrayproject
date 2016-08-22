@@ -31,7 +31,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true"
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp"
             >
 
             <LinearLayout
@@ -99,7 +100,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true"
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp"
             >
 
             <LinearLayout
@@ -167,7 +169,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:cardCornerRadius="5dp"
-            app:cardUseCompatPadding="true"
+            app:cardUseCompatPadding="true" 
+			app:cardElevation="0dp"
             >
 
             <LinearLayout
