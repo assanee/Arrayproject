@@ -1,8 +1,10 @@
 package xyz.stepsecret.arrayproject3;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -61,8 +63,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private Toolbar toolbar;
 
-    private SearchView search_shop;
-
     public GoogleMap gMap;
     public MapView mMap;
 
@@ -90,6 +90,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private TinyDB Store_data;
 
+    SweetAlertDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,27 +114,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ConfigData.API).build();
-
-
-        search_shop = (SearchView) findViewById(R.id.search_shop);
-        search_shop.setQueryHint(getResources().getString(R.string.shop_search));
-
-        search_shop.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG).show();
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), newText, Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-
 
         buildGoogleApiClient();
 
@@ -214,6 +195,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (mLastLocation != null) {
 
+            pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
             setCamera();
             NearData(mLastLocation);
         }
@@ -266,6 +253,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+
                 BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(bitmap);
 
                 shop[0] = gMap.addMarker(new MarkerOptions()
@@ -274,6 +262,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         .title(lat_long[2]+" : "+lat_long[3]));
 
                 mHashMap.put(shop[0], lat_long[0]);
+
             }
         });
 
@@ -305,9 +294,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
 
 
+                    pDialog.cancel();
+
                 }
                 else
                 {
+                    pDialog.cancel();
                     show_failure(result.getMessage());
                     Log.e(" TAG ","error");
                 }
@@ -319,6 +311,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void failure(RetrofitError error) {
 
+                pDialog.cancel();
                 show_failure(error.getMessage());
                 Log.e(" TAG ","failure ");
 
@@ -444,11 +437,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        String pos = mHashMap.get(marker);
+        String id_branch = mHashMap.get(marker);
 
-        Log.e(" Shop ","onMarkerClick "+pos);
+        Log.e(" Shop ","onMarkerClick "+id_branch);
 
-        return false;
+        Intent intent = new Intent(this, BookBranch.class);
+        intent.putExtra("id_branch", id_branch);
+        startActivity(intent);
+
+        return true;
     }
 
     @Override

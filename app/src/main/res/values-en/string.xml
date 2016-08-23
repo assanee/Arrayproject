@@ -60,5 +60,7 @@
     <string name="numberofseat">Number of Seat(s)</string>
     <string name="reservenow">RESERVE NOW</string>
 
+    <string name="search">Search</string>
+
 
 </resources>

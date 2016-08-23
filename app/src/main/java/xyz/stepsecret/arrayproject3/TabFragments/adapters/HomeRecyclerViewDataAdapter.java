@@ -35,7 +35,6 @@ public class HomeRecyclerViewDataAdapter extends RecyclerView.Adapter<HomeRecycl
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_item, null);
         ItemRowHolder mh = new ItemRowHolder(v);
 
-        Log.e(" HomeRecycler "," >>>> "+i);
         return mh;
     }
 

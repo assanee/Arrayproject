@@ -7,37 +7,58 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import xyz.stepsecret.arrayproject3.API.Branch_API;
+import xyz.stepsecret.arrayproject3.API.PromotionById_API;
 import xyz.stepsecret.arrayproject3.BookBranch;
+import xyz.stepsecret.arrayproject3.Config.ConfigData;
+import xyz.stepsecret.arrayproject3.Model.Branch_Model;
+import xyz.stepsecret.arrayproject3.Model.PromotionById_Model;
 import xyz.stepsecret.arrayproject3.PromotionDetail;
 import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.adapters.BranchPromotionAdapter;
 import xyz.stepsecret.arrayproject3.TabFragments.models.BranchPromotionModel;
+import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
-public class BranchPromotionFragment extends Fragment {
+public class BranchPromotionFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 
-    private List<BranchPromotionModel> BranchPromotionList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private BranchPromotionAdapter mAdapter;
-    private ImageView img_brand;
-    private TextView tv_brand;
-    //SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private SliderLayout mDemoSlider;
+
+    private int id_promotion = 0;
+
+    private RestAdapter restAdapter;
+
+    private TinyDB Store_data;
 
 
     @Override
@@ -50,148 +71,114 @@ public class BranchPromotionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
-
-
         View v = inflater.inflate(R.layout.branchpromotion_content, container, false);
 
+        mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ConfigData.API).build();
 
-        img_brand = (ImageView) v.findViewById(R.id.img_brand);
-        tv_brand = (TextView) v.findViewById(R.id.tv_name_brand);
-
-
-       // mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swifeRefresh);
-       // mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
-
-        mAdapter = new BranchPromotionAdapter(getContext(),BranchPromotionList);
+        Store_data = new TinyDB(getContext());
 
 
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                BranchPromotionModel BranchPromotions = BranchPromotionList.get(position);
-                Toast.makeText(getContext(),  BranchPromotions.getId() + " is selected!", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(getContext(), PromotionDetail.class);
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-        Glide.with(this)
-                .load("https://stepsecret.xyz/logo xues lab.png")
-                .placeholder(R.drawable.nodownload)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(img_brand);
-
-        tv_brand.setText("XEUS LAB");
-
-      /*  mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                prepareMovieData();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-*/
-        clearData();
-        prepareMovieData();
+        load();
 
         return v;
     }
-    public void clearData() {
-        BranchPromotionList.clear(); //clear list
-        mAdapter.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
-    }
 
+    public void load()
+    {
+        final PromotionById_API promotionById_api = restAdapter.create(PromotionById_API.class);
 
-    private void prepareMovieData() {
+        promotionById_api.Get_PromotionById_API(Store_data.getString("api_key"),Store_data.getString("id_branch"), new Callback<PromotionById_Model>() {
+            @Override
+            public void success(PromotionById_Model result, Response response) {
 
-       // mAdapter.re
+                HashMap<String,String> url_maps = new HashMap<String, String>();
 
-        String id = "1";
-        String Logo = "https://stepsecret.xyz/logo xues lab.png";
-        String branch = "stepsecret.xyz/logo";
-        String url = "https://www.techwyse.com/blog/wp-content/uploads/2015/10/What-are-the-Different-Types-of-Instagram-Ads.png";
+                if(!result.getError() && result.getData().length > 0)
+                {
 
-        BranchPromotionModel BranchPromotions;
-        for(int i = 0 ; i < 5 ; i++)
-        {
-            BranchPromotions = new BranchPromotionModel(i+"", Logo, branch, url);
-            BranchPromotionList.add(BranchPromotions);
+                   for (int i = 0 ; i < result.getData().length ; i++)
+                   {
+                       url_maps.put(result.getData()[i][2], ConfigData.Promotion+result.getData()[i][3]);
+                   }
 
-        }
+                   for(String name : url_maps.keySet()){
+                        TextSliderView textSliderView = new TextSliderView(getContext());
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(name)
+                                .image(url_maps.get(name))
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(BranchPromotionFragment.this);
 
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle()
+                                .putString("extra",name);
 
-
-
-        mAdapter.notifyDataSetChanged();
-    }
-
-    public interface ClickListener {
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-    }
-
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                        mDemoSlider.addSlider(textSliderView);
                     }
+
+                    mDemoSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+                    mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                    mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+                    mDemoSlider.stopAutoCycle();
+                    mDemoSlider.addOnPageChangeListener(BranchPromotionFragment.this);
+
                 }
-            });
-        }
 
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
+
             }
-            return false;
-        }
 
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
+            @Override
+            public void failure(RetrofitError error) {
 
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                show_failure(error.getMessage());
+                Log.e(" TAG 2","failure");
 
-        }
+            }
+        });
+
+
     }
+
+
+    public void show_failure(String message)
+    {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(message)
+                .show();
+    }
+
+    @Override
+    public void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Log.e("Slider Demo", "Page onSliderClick: " +id_promotion + " > " +slider.getDescription());
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageSelected(int position) {
+
+        Log.e("Slider Demo", "Page Changed: " + position);
+
+        id_promotion = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {}
 
 
 }

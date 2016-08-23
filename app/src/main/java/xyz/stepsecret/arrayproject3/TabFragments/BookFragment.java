@@ -273,7 +273,9 @@ public class BookFragment extends Fragment {
                 if(!result.getError() && result.getData().length > 0)
                 {
 
-                    Glide.with(getContext())
+                    Log.e(" Book ",""+ConfigData.Logo+result.getData()[0][8]);
+
+                   Glide.with(getContext())
                             .load(ConfigData.Logo+result.getData()[0][8])
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()

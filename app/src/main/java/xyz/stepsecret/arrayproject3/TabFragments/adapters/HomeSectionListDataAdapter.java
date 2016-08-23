@@ -42,8 +42,6 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
     public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
         HomeSingleItemModel singleItem = itemsList.get(i);
-        Log.e(" HomeSection "," >>>> "+i+" : "+singleItem.getViewType());
-
 
         if(singleItem.getViewType().equals("normal"))
         {
@@ -115,8 +113,6 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
                 @Override
                 public void onClick(View v) {
 
-
-                    Log.e(" Home1 "," : "+id);
                     showPopupMenu(overflow);
 
                 }

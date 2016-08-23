@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,10 +34,12 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import xyz.stepsecret.arrayproject3.API.Favorite_API;
 import xyz.stepsecret.arrayproject3.API.Near_API;
 import xyz.stepsecret.arrayproject3.API.Promotion_API;
 import xyz.stepsecret.arrayproject3.Config.ConfigData;
+import xyz.stepsecret.arrayproject3.MainActivity;
 import xyz.stepsecret.arrayproject3.MapActivity;
 import xyz.stepsecret.arrayproject3.Model.Favorite_Model;
 import xyz.stepsecret.arrayproject3.Model.Near_Model;
@@ -167,7 +170,6 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
 
 
         buildGoogleApiClient();
-
 
 
         return v;

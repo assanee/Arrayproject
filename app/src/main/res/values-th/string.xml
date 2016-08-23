@@ -60,5 +60,7 @@
     <string name="numberofseat">จำนวนที่นั่ง</string>
     <string name="reservenow">จอง</string>
 
+    <string name="search">ค้นหา</string>
+
 
 </resources>
