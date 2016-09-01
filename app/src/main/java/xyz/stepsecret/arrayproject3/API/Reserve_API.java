@@ -12,7 +12,7 @@ import xyz.stepsecret.arrayproject3.Model.Reserve_Model;
 public interface Reserve_API {
 
     @FormUrlEncoded
-    @POST("/array/v1/createqueue")
+    @POST("/array/api/v1/createqueue")
     public void Reserve_API(@Field("api_key") String api_key, @Field("id_branch") String id_branch,
                        @Field("table_type") String table_type, @Field("number") String number, Callback<Reserve_Model> response);
 

@@ -5,12 +5,6 @@
 
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/glass_w"
-        android:orderInCategory="1"
-        android:title="@string/search"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_mail"
         android:icon="@drawable/notification_drawable"
         android:orderInCategory="1"

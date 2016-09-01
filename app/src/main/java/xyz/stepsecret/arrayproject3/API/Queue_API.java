@@ -10,7 +10,7 @@ import xyz.stepsecret.arrayproject3.Model.Queue_Model;
  */
 public interface Queue_API {
 
-    @GET("/array/v1/queue")
+    @GET("/array/api/v1/queue")
     public void Get_Queue_API(@Query("api_key") String api_key, Callback<Queue_Model> response);
 
 }

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/tools"
     android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
 
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider"
@@ -17,10 +24,12 @@
 
              />
 
+
+
     </android.support.percent.PercentRelativeLayout>
 
 
-
+</LinearLayout>
 
 
 

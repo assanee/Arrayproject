@@ -10,7 +10,7 @@ import xyz.stepsecret.arrayproject3.Model.History_Model;
  */
 public interface History_API {
 
-    @GET("/array/v1/history")
+    @GET("/array/api/v1/history")
     public void Get_History_API(@Query("api_key") String api_key, Callback<History_Model> response);
 
 }

@@ -232,8 +232,6 @@ public class BookFragment extends Fragment {
                                             .setConfirmClickListener(null)
                                             .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
 
-
-
                                 }
                                 else
                                 {
@@ -273,7 +271,7 @@ public class BookFragment extends Fragment {
                 if(!result.getError() && result.getData().length > 0)
                 {
 
-                    Log.e(" Book ",""+ConfigData.Logo+result.getData()[0][8]);
+                    //Log.e(" Book ",""+ConfigData.Logo+result.getData()[0][8]);
 
                    Glide.with(getContext())
                             .load(ConfigData.Logo+result.getData()[0][8])

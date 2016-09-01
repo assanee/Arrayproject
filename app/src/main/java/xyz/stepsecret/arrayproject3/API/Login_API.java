@@ -14,7 +14,7 @@ import xyz.stepsecret.arrayproject3.Model.Login_Model;
 public interface Login_API {
 
     @FormUrlEncoded
-    @POST("/array/v1/login")
+    @POST("/array/api/v1/login")
     public void SignIN(@Field("email") String email, @Field("password") String password, Callback<Login_Model> response);
 
 

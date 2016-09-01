@@ -8,8 +8,8 @@ package xyz.stepsecret.arrayproject3.Config;
 public class ConfigData {
 
     public static String API = "https://stepsecret.xyz";
-    public static String Logo = "https://stepsecret.xyz/array/logo_brand/";
-    public static String Promotion = "https://stepsecret.xyz/array/img_promotion/";
+    public static String Logo = API+"/array/api/logo_brand/";
+    public static String Promotion = API+"/array/api/img_promotion/";
 
 
 

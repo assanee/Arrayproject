@@ -16,16 +16,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import xyz.stepsecret.arrayproject3.API.ChangeFavorite_API;
 import xyz.stepsecret.arrayproject3.BookBranch;
+import xyz.stepsecret.arrayproject3.Config.ConfigData;
+import xyz.stepsecret.arrayproject3.Model.ChangeFavorite_Model;
+import xyz.stepsecret.arrayproject3.PromotionDetail;
 import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.models.HomeSingleItemModel;
+import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSectionListDataAdapter.SingleItemRowHolder> {
 
@@ -113,7 +122,7 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
                 @Override
                 public void onClick(View v) {
 
-                    showPopupMenu(overflow);
+                    showPopupMenu(overflow,id_branch);
 
                 }
             });
@@ -131,6 +140,9 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
                     else
                     {
                         Log.e(" Home1 "," : "+view_type);
+                        Intent intent = new Intent(mContext, PromotionDetail.class);
+                        intent.putExtra("id_promotion", id);
+                        mContext.startActivity(intent);
                     }
 
 
@@ -150,12 +162,12 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
     /**
      * Showing popup menu when tapping on 3 dots
      */
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(View view, String id_branch) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_option, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(id_branch));
         popup.show();
     }
 
@@ -164,19 +176,82 @@ public class HomeSectionListDataAdapter extends RecyclerView.Adapter<HomeSection
      */
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        public MyMenuItemClickListener() {
+        private String id_branch;
+        private RestAdapter restAdapter;
+        private TinyDB Store_data;
+
+        public MyMenuItemClickListener(String id_branch) {
+
+            restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(ConfigData.API).build();
+
+            Store_data = new TinyDB(mContext);
+
+            this.id_branch = id_branch;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Add to favourite id : ", Toast.LENGTH_SHORT).show();
+                    ChangeFavorite(id_branch);
                     return true;
                 default:
             }
             return false;
         }
+
+
+        public void show_success(String message)
+        {
+            new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText(message)
+                    .show();
+        }
+
+        public void show_failure(String message)
+        {
+            new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText(message)
+                    .show();
+        }
+
+        public void ChangeFavorite(String id_branch)
+        {
+
+            final ChangeFavorite_API changeFavorite_api = restAdapter.create(ChangeFavorite_API.class);
+
+            changeFavorite_api.ChangeFavorite_API(Store_data.getString("api_key"),id_branch, new Callback<ChangeFavorite_Model>() {
+                @Override
+                public void success(ChangeFavorite_Model result, Response response) {
+
+                    if(!result.getError()) {
+
+                        show_success(result.getMessage());
+                    }
+                    else
+                    {
+                        show_failure(result.getMessage());
+
+                    }
+
+
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                    show_failure(error.getMessage());
+                    Log.e(" PromotionData ","failure ");
+
+                }
+            });
+
+
+        }
+
+
     }
 
 }

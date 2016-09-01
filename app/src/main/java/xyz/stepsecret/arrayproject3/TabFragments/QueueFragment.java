@@ -121,14 +121,11 @@ public class QueueFragment extends Fragment {
 
                 if(!result.getError() && result.getData().length > 0) {
 
-                    String[] alert = new String[]{
-                            "05/12/2016 12:32:22 A010 Your Queue is on service.",
-                            "05/12/2016 12:26:26 A010 5 Queue to go." ,
-                            "05/12/2016 12:01:13 Thank you for registed. You Queue is A010 - 6 waiting queue (30 min)"};
 
 
                     for(int i = 0 ; i < result.getData().length ; i++)
                     {
+                        String[] alert = result.getStatus()[i];
                         String id_queue = result.getData()[i][0];
                         String current_queue_table = "1-2";
                         String name_brand = result.getData()[i][8];

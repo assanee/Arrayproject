@@ -10,7 +10,7 @@ import xyz.stepsecret.arrayproject3.Model.PromotionById_Model;
  */
 public interface PromotionById_API {
 
-    @GET("/array/v1/promotionbyid")
+    @GET("/array/api/v1/promotionbyidbranch")
     public void Get_PromotionById_API(@Query("api_key") String api_key, @Query("id_branch") String id_branch, Callback<PromotionById_Model> response);
 
 }

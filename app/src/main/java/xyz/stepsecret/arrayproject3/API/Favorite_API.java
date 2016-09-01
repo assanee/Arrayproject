@@ -10,7 +10,7 @@ import xyz.stepsecret.arrayproject3.Model.Favorite_Model;
  */
 public interface Favorite_API {
 
-    @GET("/array/v1/favorite")
+    @GET("/array/api/v1/favorite")
     public void Get_Favorite_API(@Query("api_key") String api_key, Callback<Favorite_Model> response);
 
 }

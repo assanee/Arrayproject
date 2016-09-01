@@ -16,6 +16,9 @@ public class Queue_Model {
     @SerializedName("data")
     private String[][] data;
 
+    @SerializedName("status")
+    private String[][] status;
+
     public Boolean getError() {
         return error;
     }
@@ -26,6 +29,10 @@ public class Queue_Model {
 
     public String[][] getData() {
         return data;
+    }
+
+    public String[][] getStatus() {
+        return status;
     }
 
 }

@@ -195,7 +195,6 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
 
     public void FavoriteData()
     {
-        Log.e(" TAG ","success : start" );
 
         final Favorite_API favorite_api = restAdapter.create(Favorite_API.class);
 
@@ -240,7 +239,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
                 else
                 {
                     show_failure(result.getMessage());
-                    Log.e(" TAG ","error");
+                    Log.e(" shop FavoriteData ","error");
                 }
 
 
@@ -251,7 +250,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
             public void failure(RetrofitError error) {
 
                 show_failure(error.getMessage());
-                Log.e(" TAG ","failure");
+                Log.e(" shop FavoriteData ","failure");
 
             }
         });
@@ -263,6 +262,8 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
 
     public void NearData(Location location)
     {
+
+        Log.e(" NearData ","start > "+location.getLatitude()+" : "+location.getLongitude());
 
         final Near_API near_api = restAdapter.create(Near_API.class);
 
@@ -306,7 +307,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
                 else
                 {
                     show_failure(result.getMessage());
-                    Log.e(" TAG ","error");
+                    Log.e(" NearData ","error");
                 }
 
 
@@ -317,7 +318,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
             public void failure(RetrofitError error) {
 
                 show_failure(error.getMessage());
-                Log.e(" TAG ","failure ");
+                Log.e(" NearData ","failure ");
 
             }
         });

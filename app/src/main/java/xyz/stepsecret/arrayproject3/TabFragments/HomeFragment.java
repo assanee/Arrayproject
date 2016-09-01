@@ -24,6 +24,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Client;
 import retrofit.client.Response;
+import xyz.stepsecret.arrayproject3.API.ChangeFavorite_API;
 import xyz.stepsecret.arrayproject3.API.Favorite_API;
 import xyz.stepsecret.arrayproject3.API.History_API;
 import xyz.stepsecret.arrayproject3.API.Login_API;
@@ -165,7 +166,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 else
                 {
                     show_failure(result.getMessage());
-                    Log.e(" TAG ","error");
+                    Log.e(" FavoriteData ","error");
                 }
 
 
@@ -176,7 +177,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             public void failure(RetrofitError error) {
 
                 show_failure(error.getMessage());
-                Log.e(" TAG ","failure");
+                Log.e(" FavoriteData ","failure");
 
             }
         });
@@ -230,7 +231,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 else
                 {
                     show_failure(result.getMessage());
-                    Log.e(" TAG ","error");
+                    Log.e(" HistoryData ","error");
                 }
 
 
@@ -241,7 +242,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             public void failure(RetrofitError error) {
 
                 show_failure(error.getMessage());
-                Log.e(" TAG ","failure");
+                Log.e(" HistoryData ","failure");
 
             }
         });
@@ -289,8 +290,8 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 }
                 else
                 {
-                    show_failure(result.getMessage());
-                    Log.e(" TAG ","error");
+                   // show_failure(result.getMessage());
+                   // Log.e(" PromotionData ","error");
                 }
 
 
@@ -301,7 +302,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             public void failure(RetrofitError error) {
 
                 show_failure(error.getMessage());
-                Log.e(" TAG ","failure ");
+                Log.e(" PromotionData ","failure ");
 
             }
         });
@@ -363,12 +364,15 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 mGoogleApiClient);
 
         Log.e(" Home "," Location success ");
+        Log.e(" Home "," check_do > "+check_do);
 
         if(check_do)
         {   check_do = false;
 
+            Log.e(" Home "," call FavoriteData ");
             FavoriteData();
 
+            Log.e(" Home "," call PromotionData ");
             PromotionData(mLastLocation);
         }
 

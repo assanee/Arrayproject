@@ -12,7 +12,7 @@ import xyz.stepsecret.arrayproject3.Model.DeleteQueue_Model;
 public interface DeleteQueue_API {
 
     @FormUrlEncoded
-    @POST("/array/v1/deletequeue")
+    @POST("/array/api/v1/deletequeue")
     public void DeleteQueue_API(@Field("api_key") String api_key, @Field("id_queue") String id_queue, Callback<DeleteQueue_Model> response);
 
 }

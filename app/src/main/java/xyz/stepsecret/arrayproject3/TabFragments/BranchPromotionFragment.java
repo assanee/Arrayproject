@@ -60,6 +60,10 @@ public class BranchPromotionFragment extends Fragment implements BaseSliderView.
 
     private TinyDB Store_data;
 
+    private  Boolean check_have = true;
+
+    private ArrayList<String> id_promotion_List = new ArrayList<String>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,19 +79,27 @@ public class BranchPromotionFragment extends Fragment implements BaseSliderView.
 
         mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
 
+        //mDemoSlider.setVisibility(View.INVISIBLE);
+        //mDemoSlider.setVisibility(View.GONE);
+
+
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ConfigData.API).build();
 
         Store_data = new TinyDB(getContext());
 
+        check_have = true;
 
         load();
+
 
         return v;
     }
 
     public void load()
     {
+        //Log.e("Load", " : " + Store_data.getString("id_branch"));
+
         final PromotionById_API promotionById_api = restAdapter.create(PromotionById_API.class);
 
         promotionById_api.Get_PromotionById_API(Store_data.getString("api_key"),Store_data.getString("id_branch"), new Callback<PromotionById_Model>() {
@@ -96,15 +108,22 @@ public class BranchPromotionFragment extends Fragment implements BaseSliderView.
 
                 HashMap<String,String> url_maps = new HashMap<String, String>();
 
+
                 if(!result.getError() && result.getData().length > 0)
                 {
+                    check_have = true;
 
                    for (int i = 0 ; i < result.getData().length ; i++)
                    {
                        url_maps.put(result.getData()[i][2], ConfigData.Promotion+result.getData()[i][3]);
+
+
+                       id_promotion_List.add(result.getData()[i][0]);
                    }
 
-                   for(String name : url_maps.keySet()){
+                   for(String name : url_maps.keySet())
+                   {
+
                         TextSliderView textSliderView = new TextSliderView(getContext());
                         // initialize a SliderLayout
                         textSliderView
@@ -128,8 +147,42 @@ public class BranchPromotionFragment extends Fragment implements BaseSliderView.
                     mDemoSlider.addOnPageChangeListener(BranchPromotionFragment.this);
 
                 }
+                else
+                {
+
+                    check_have = false;
+
+                    url_maps.put("No Promotion", ConfigData.Promotion+"nodownload.png");
+
+                    for(String name : url_maps.keySet())
+                    {
+
+                        Log.e("Load", " i : " + name);
+
+                        TextSliderView textSliderView = new TextSliderView(getContext());
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(name)
+                                .image(url_maps.get(name))
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(BranchPromotionFragment.this);
+
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle()
+                                .putString("extra",name);
+
+                        mDemoSlider.addSlider(textSliderView);
+                    }
 
 
+                    mDemoSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+                    mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                    mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+                    mDemoSlider.stopAutoCycle();
+                    mDemoSlider.addOnPageChangeListener(BranchPromotionFragment.this);
+
+                }
 
             }
 
@@ -162,7 +215,16 @@ public class BranchPromotionFragment extends Fragment implements BaseSliderView.
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Log.e("Slider Demo", "Page onSliderClick: " +id_promotion + " > " +slider.getDescription());
+
+
+        if(check_have == true)
+        {
+            Log.e(" Branch "," id_promotion : "+id_promotion_List.get(id_promotion));
+            Intent intent = new Intent(getContext(), PromotionDetail.class);
+            intent.putExtra("id_promotion", id_promotion_List.get(id_promotion));
+            startActivity(intent);
+        }
+
 
     }
 

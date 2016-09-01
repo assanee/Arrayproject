@@ -12,16 +12,30 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.zxing.WriterException;
+import com.metalurgus.longtextview.LongTextView;
 
-import net.glxn.qrgen.android.QRCode;
+import java.util.HashMap;
 
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import xyz.stepsecret.arrayproject3.API.PromotionById_API;
+import xyz.stepsecret.arrayproject3.API.PromotionDetail_API;
+import xyz.stepsecret.arrayproject3.Config.ConfigData;
+import xyz.stepsecret.arrayproject3.Model.PromotionById_Model;
+import xyz.stepsecret.arrayproject3.Model.PromotionDetail_Model;
+import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 /**
  * Created by stepsecret on 10/8/2559.
@@ -29,13 +43,21 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class PromotionDetail extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private ImageView img_brand, img_promotion, img_qr;
-    private Bitmap myBitmap;
+    private ImageView img_promotion;
+    private LongTextView longTextView;
+    private LongTextView tv_head;
+
+    private RestAdapter restAdapter;
+
+    private TinyDB Store_data;
+
+    private String id_promotion = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_promotion_detail);
+        setContentView(R.layout.activity_promotion_detail_new);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -45,58 +67,79 @@ public class PromotionDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Promotion Detail");
 
-        img_brand = (ImageView) findViewById(R.id.img_brand);
+        id_promotion = getIntent().getExtras().getString("id_promotion");
+
+
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ConfigData.API).build();
+
+        Store_data = new TinyDB(this);
+
         img_promotion = (ImageView) findViewById(R.id.img_promotion);
-        img_qr = (ImageView) findViewById(R.id.img_qr);
-
-        Glide.with(this)
-                .load("https://stepsecret.xyz/logo xues lab.png")
-                .placeholder(R.drawable.nodownload)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img_brand);
-
-        Glide.with(this)
-                .load("https://s-media-cache-ak0.pinimg.com/236x/68/78/be/6878be6f9e47fae599902cf87011d399.jpg")
-                .placeholder(R.drawable.nodownload)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img_promotion);
-
-        myBitmap = QRCode.from("56453148641514894564894984").bitmap();
-
-        img_qr.setImageBitmap(myBitmap);
+        longTextView = (LongTextView) findViewById(R.id.view);
+        tv_head = (LongTextView) findViewById(R.id.tv_head);
 
 
-        img_qr.setOnClickListener(new View.OnClickListener() {
+        load();
+
+    }
+
+
+    public void load()
+    {
+        //Log.e("Load", " : " + Store_data.getString("id_branch"));
+
+        final PromotionDetail_API promotionDetail_api = restAdapter.create(PromotionDetail_API.class);
+
+        promotionDetail_api.Get_PromotionDetail_API(Store_data.getString("api_key"),id_promotion, new Callback<PromotionDetail_Model>() {
             @Override
-            public void onClick(View v) {
-
-                //img_qr.setVisibility(View.GONE);
-                //img_promotion.setImageBitmap(myBitmap);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        MaterialDialog dialog = new MaterialDialog.Builder(PromotionDetail.this)
-                                .customView(R.layout.dialog_qrcode, true)
-                                .positiveText("Exit")
-                                .build();
-
-                        dialog.show();
-
-                        ImageView img_qr_show = (ImageView) dialog.findViewById(R.id.img_qr_show);
-
-                        img_qr_show.setImageBitmap(myBitmap);
-                    }
-                }, 1000); // starting it in 1 second
+            public void success(PromotionDetail_Model result, Response response) {
 
 
+                if(!result.getError() && result.getData().length > 0)
+                {
 
+                    Glide.with(PromotionDetail.this)
+                            .load(ConfigData.Promotion+result.getData()[0][3])
+                            .placeholder(R.drawable.nodownload)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(img_promotion);
+
+                    tv_head.setText(result.getData()[0][2]);
+
+                    longTextView.setText(result.getData()[0][5]);
+
+
+                }
+                else
+                {
+
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                show_failure(error.getMessage());
+                Log.e(" TAG 2","failure");
 
             }
         });
 
+
     }
+
+
+    public void show_failure(String message)
+    {
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(message)
+                .show();
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
