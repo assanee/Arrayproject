@@ -306,7 +306,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
                 }
                 else
                 {
-                    show_failure(result.getMessage());
+                    //show_failure(result.getMessage());
                     Log.e(" NearData ","error");
                 }
 

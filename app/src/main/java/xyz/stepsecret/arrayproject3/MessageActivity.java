@@ -213,7 +213,7 @@ public class MessageActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem control = menu.findItem(R.id.action_control);
+       /* MenuItem control = menu.findItem(R.id.action_control);
         MenuItem mail = menu.findItem(R.id.action_mail);
 
         // Obtener drawable del item
@@ -224,7 +224,7 @@ public class MessageActivity extends AppCompatActivity {
 
         //Utils.setBadgeCount(this, control_icon, 3);
         //Utils.setBadgeCount(this, mail_icon, 3);
-
+*/
         return true;
     }
 
@@ -236,7 +236,7 @@ public class MessageActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_control) {
+        /*if (id == R.id.action_control) {
             Log.e(" menu "," control ");
 
             LayerDrawable control_icon = (LayerDrawable) item.getIcon();
@@ -250,7 +250,7 @@ public class MessageActivity extends AppCompatActivity {
 
             return true;
         }
-        else if (id == R.id.action_mail) {
+        else*/ if (id == R.id.action_control) {
             Log.e(" menu "," mail ");
 
             LayerDrawable mail_icon = (LayerDrawable) item.getIcon();

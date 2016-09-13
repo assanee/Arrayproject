@@ -253,6 +253,8 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
     public void PromotionData(Location location)
     {
 
+        Log.e("Promotion home "," lat : "+location.getLatitude()+" long : "+location.getLongitude());
+
         final Promotion_API promotion_api = restAdapter.create(Promotion_API.class);
 
         promotion_api.Get_Promotion_API(Store_data.getString("api_key"),location.getLatitude()+"",location.getLongitude()+"", new Callback<Promotion_Model>() {
@@ -372,7 +374,8 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             Log.e(" Home "," call FavoriteData ");
             FavoriteData();
 
-            Log.e(" Home "," call PromotionData ");
+            Log.e(" Home > "," call PromotionData ");
+            Log.e("Promotion home "," lat : "+mLastLocation.getLatitude()+" long : "+mLastLocation.getLongitude());
             PromotionData(mLastLocation);
         }
 

@@ -1,9 +1,15 @@
 package xyz.stepsecret.arrayproject3.TabFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,47 +21,49 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import xyz.stepsecret.arrayproject3.API.Branch_API;
-import xyz.stepsecret.arrayproject3.API.DeleteQueue_API;
 import xyz.stepsecret.arrayproject3.API.Reserve_API;
+import xyz.stepsecret.arrayproject3.API.Table_API;
 import xyz.stepsecret.arrayproject3.Config.ConfigData;
 import xyz.stepsecret.arrayproject3.Model.Branch_Model;
-import xyz.stepsecret.arrayproject3.Model.DeleteQueue_Model;
 import xyz.stepsecret.arrayproject3.Model.Reserve_Model;
+import xyz.stepsecret.arrayproject3.Model.Table_Model;
 import xyz.stepsecret.arrayproject3.R;
+import xyz.stepsecret.arrayproject3.TabFragments.adapters.TableAdapter;
+import xyz.stepsecret.arrayproject3.TabFragments.models.TableModel;
 import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 
 public class BookFragment extends Fragment {
 
-    private LinearLayout ln1;
-    private LinearLayout ln2;
-    private LinearLayout ln3;
+    private static List<TableModel> TableList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private TableAdapter mAdapter;
+
+    private  RestAdapter restAdapter;
+    private  TinyDB Store_data;
 
     private ImageView img_brand, img_right, img_left;
-
-    private TextView tv_name_brand, tv_name_brand_branch, tv_wait_queue1, tv_wait_queue2, tv_wait_queue3, tv_wait_time1, tv_wait_time2, tv_wait_time3;
 
     private Button btn_book;
 
     private EditText edt_number;
 
-    private RestAdapter restAdapter;
-
-    private TinyDB Store_data;
+    private TextView tv_name_brand, tv_name_branch;
 
     private int number = 0;
 
-    private String type_table;
+    public static String Id_table = "";
 
-    public BookFragment() {
-        // Required empty public constructor
-    }
+    public static String type_table = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,24 +77,30 @@ public class BookFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.bookbranch_book, container, false);
 
-        ln1 = (LinearLayout) v.findViewById(R.id.ln_1);
-        ln2 = (LinearLayout) v.findViewById(R.id.ln_2);
-        ln3 = (LinearLayout) v.findViewById(R.id.ln_3);
+        number = 0;
+
+        Id_table = "";
+
+        type_table = "";
+
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ConfigData.API).build();
+
+        Store_data = new TinyDB(getContext());
+
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         img_brand = (ImageView) v.findViewById(R.id.img_brand);
         img_right = (ImageView) v.findViewById(R.id.img_right);
         img_left = (ImageView) v.findViewById(R.id.img_left);
 
-        tv_name_brand = (TextView) v.findViewById(R.id.tv_name_brand);
-        tv_name_brand_branch = (TextView) v.findViewById(R.id.tv_name_brand_branch);
-        tv_wait_queue1 = (TextView) v.findViewById(R.id.tv_wait_queue1);
-        tv_wait_queue2 = (TextView) v.findViewById(R.id.tv_wait_queue2);
-        tv_wait_queue3 = (TextView) v.findViewById(R.id.tv_wait_queue3);
-        tv_wait_time1 = (TextView) v.findViewById(R.id.tv_wait_time1);
-        tv_wait_time2 = (TextView) v.findViewById(R.id.tv_wait_time2);
-        tv_wait_time3 = (TextView) v.findViewById(R.id.tv_wait_time3);
 
         btn_book = (Button) v.findViewById(R.id.btn_book);
+
+        edt_number = (EditText) v.findViewById(R.id.edt_number);
+
+        tv_name_brand = (TextView) v.findViewById(R.id.tv_name_brand);
+        tv_name_branch = (TextView) v.findViewById(R.id.tv_name_branch);
 
         edt_number = (EditText) v.findViewById(R.id.edt_number);
 
@@ -95,53 +109,53 @@ public class BookFragment extends Fragment {
         Store_data = new TinyDB(getContext());
 
 
+        mAdapter = new TableAdapter(getContext(),TableList);
 
-        ln1.setOnClickListener(new View.OnClickListener() {
+
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view, final int position) {
 
-                ln1.setBackgroundResource(R.drawable.rounded_corner_red);
-                ln2.setBackgroundResource(R.drawable.rounded_corner_no);
-                ln3.setBackgroundResource(R.drawable.rounded_corner_no);
+                final TableModel Tables = TableList.get(position);
 
-                type_table = "1-2";
+                //Id_table = Tables.getIdtable();
+                //type_table = Tables.getTable();
 
             }
-        });
 
-        ln2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                ln1.setBackgroundResource(R.drawable.rounded_corner_no);
-                ln2.setBackgroundResource(R.drawable.rounded_corner_red);
-                ln3.setBackgroundResource(R.drawable.rounded_corner_no);
-
-                type_table = "3-4";
+            public void onLongClick(View view, int position) {
 
             }
-        });
+        }));
 
-        ln3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        tv_name_brand.setText(Store_data.getString("shopname"));
+        tv_name_branch.setText(Store_data.getString("branchname"));
 
-                ln1.setBackgroundResource(R.drawable.rounded_corner_no);
-                ln2.setBackgroundResource(R.drawable.rounded_corner_no);
-                ln3.setBackgroundResource(R.drawable.rounded_corner_red);
-
-                type_table = "6+";
-
-            }
-        });
+        Glide.with(getContext())
+                .load(ConfigData.Logo+Store_data.getString("logo"))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .into(img_brand);
 
         img_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                    number++;
-                    edt_number.setText(""+number);
+                number++;
+                edt_number.setText(""+number);
 
             }
         });
@@ -170,10 +184,70 @@ public class BookFragment extends Fragment {
             }
         });
 
+        clearData();
         getBranch();
 
         return v;
     }
+
+    public void clearData() {
+        TableList.clear(); //clear list
+        mAdapter.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
+        prepareMovieData();
+    }
+
+    private void prepareMovieData() {
+
+        final Table_API table_api = restAdapter.create(Table_API.class);
+
+        table_api.Get_Table_API(Store_data.getString("api_key"), Store_data.getString("id_branch"), new Callback<Table_Model>() {
+            @Override
+            public void success(Table_Model result, Response response) {
+
+                if(!result.getError() && result.getData().length > 0) {
+
+                    for(int i = 0 ; i < result.getData().length ; i++)
+                    {
+                        String id_table = result.getData()[i][0];
+                        String id_branch = result.getData()[i][1];
+                        String table = result.getData()[i][2];
+                        String wait_time = result.getData()[i][3];
+                        String wait_queue = result.getData()[i][4];
+
+                        TableModel queues = new TableModel( id_table, wait_queue, table, wait_time);
+                        TableList.add(queues);
+
+
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+
+                }
+                else
+                {
+                    //show_failure(result.getMessage());
+                    Log.e(" BookFragment ","error");
+                }
+
+
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                //show_failure(error.getMessage());
+                Log.e(" TAG ","failure");
+
+            }
+        });
+
+
+
+
+    }
+
+
 
     public void check_input()
     {
@@ -181,12 +255,13 @@ public class BookFragment extends Fragment {
         {
             show_failure(" Number of Seat > 0");
         }
-        else if(type_table == null)
+        else if(type_table == null || type_table.isEmpty())
         {
             show_failure(" Please select table");
         }
         else
         {
+            Log.e(" Bookfragment "," > "+type_table);
             alert_book();
         }
     }
@@ -258,6 +333,71 @@ public class BookFragment extends Fragment {
                 .show();
     }
 
+
+    public void show_success(String message)
+    {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(message)
+                .show();
+    }
+
+    public void show_failure(String message)
+    {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(message)
+                .show();
+    }
+
+
+    public interface ClickListener {
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private BookFragment.ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final BookFragment.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
     public void getBranch()
     {
         Log.e(" TAG ","success : start" );
@@ -273,7 +413,7 @@ public class BookFragment extends Fragment {
 
                     //Log.e(" Book ",""+ConfigData.Logo+result.getData()[0][8]);
 
-                   Glide.with(getContext())
+                    Glide.with(getContext())
                             .load(ConfigData.Logo+result.getData()[0][8])
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()
@@ -281,15 +421,8 @@ public class BookFragment extends Fragment {
                             .into(img_brand);
 
                     tv_name_brand.setText(result.getData()[0][2]);
-                    tv_name_brand_branch.setText(result.getData()[0][3]);
+                    tv_name_branch.setText(result.getData()[0][3]);
 
-                    tv_wait_queue1.setText("2");
-                    tv_wait_queue2.setText("3");
-                    tv_wait_queue3.setText("4");
-
-                    tv_wait_time1.setText("20");
-                    tv_wait_time2.setText("25");
-                    tv_wait_time3.setText("40");
 
                 }
                 else
@@ -311,14 +444,6 @@ public class BookFragment extends Fragment {
             }
         });
 
-    }
-
-
-    public void show_failure(String message)
-    {
-        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
-                .setTitleText(message)
-                .show();
     }
 
 

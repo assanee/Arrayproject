@@ -20,7 +20,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.google.zxing.WriterException;
+
 import com.metalurgus.longtextview.LongTextView;
 
 import java.util.HashMap;

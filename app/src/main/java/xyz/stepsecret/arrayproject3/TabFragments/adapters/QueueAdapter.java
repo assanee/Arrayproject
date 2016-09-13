@@ -19,11 +19,9 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import xyz.stepsecret.arrayproject3.API.DeleteQueue_API;
-import xyz.stepsecret.arrayproject3.API.Queue_API;
+import xyz.stepsecret.arrayproject3.API.CancelQueue_API;
 import xyz.stepsecret.arrayproject3.Config.ConfigData;
-import xyz.stepsecret.arrayproject3.Model.DeleteQueue_Model;
-import xyz.stepsecret.arrayproject3.Model.Queue_Model;
+import xyz.stepsecret.arrayproject3.Model.CancelQueue_Model;
 import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.QueueFragment;
 import xyz.stepsecret.arrayproject3.TabFragments.models.QueueModel;
@@ -182,11 +180,11 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
                             @Override
                             public void onClick(final SweetAlertDialog sDialog) {
 
-                                final DeleteQueue_API deleteQueue_api = holder.restAdapter.create(DeleteQueue_API.class);
+                                final CancelQueue_API cancelQueue_api = holder.restAdapter.create(CancelQueue_API.class);
 
-                                deleteQueue_api.DeleteQueue_API(holder.Store_data.getString("api_key"),holder.id_queue, new Callback<DeleteQueue_Model>() {
+                                cancelQueue_api.DeleteQueue_API(holder.Store_data.getString("api_key"),holder.id_queue, new Callback<CancelQueue_Model>() {
                                     @Override
-                                    public void success(DeleteQueue_Model result, Response response) {
+                                    public void success(CancelQueue_Model result, Response response) {
 
                                         if(!result.getError()) {
 

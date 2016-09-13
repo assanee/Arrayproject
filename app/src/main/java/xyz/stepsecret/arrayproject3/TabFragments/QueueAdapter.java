@@ -22,7 +22,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, date, time, queue, number, name_brand, current_queue, current_queue_number, wait_time;
-        public ImageView img_person, img_brand, img_table, img_current_queue, img_wait_queue, img_delete;
+        public ImageView img_person, img_brand, img_table, img_current_queue, img_delete;
 
         public MyViewHolder(View view) {
             super(view);
@@ -42,7 +42,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
             img_brand = (ImageView) view.findViewById(R.id.img_brand);
             img_table = (ImageView) view.findViewById(R.id.img_table);
             img_current_queue = (ImageView) view.findViewById(R.id.img_current_queue);
-            img_wait_queue = (ImageView) view.findViewById(R.id.img_wait_queue);
             img_delete = (ImageView) view.findViewById(R.id.img_delete);
         }
     }
@@ -96,13 +95,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.MyViewHolder
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .into(holder.img_current_queue);
-
-        Glide.with(mContext)
-                .load(R.drawable.queue0)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(holder.img_wait_queue);
-
 
         Glide.with(mContext)
                 .load(R.drawable.deletebutton)

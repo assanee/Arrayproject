@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_bar, menu);
 
-        MenuItem control = menu.findItem(R.id.action_control);
+       /* MenuItem control = menu.findItem(R.id.action_control);
         MenuItem mail = menu.findItem(R.id.action_mail);
 
         // Obtener drawable del item
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Utils.setBadgeCount(this, control_icon, 3);
         Utils.setBadgeCount(this, mail_icon, 3);
-
+*/
         return true;
     }
 
@@ -143,10 +143,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_control) {
-            Log.e(" menu "," control ");
 
             LayerDrawable control_icon = (LayerDrawable) item.getIcon();
-
 
             Utils.setBadgeCount(this, control_icon, 0);
 
@@ -156,19 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
-        else if (id == R.id.action_mail) {
-            Log.e(" menu "," mail ");
 
-            LayerDrawable mail_icon = (LayerDrawable) item.getIcon();
-
-
-            Utils.setBadgeCount(this, mail_icon, 0);
-
-            Intent intent = new Intent(this, MessageActivity.class);
-            startActivity(intent);
-
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
