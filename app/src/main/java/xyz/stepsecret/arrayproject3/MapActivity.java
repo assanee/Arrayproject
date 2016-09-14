@@ -90,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private TinyDB Store_data;
 
-    SweetAlertDialog pDialog;
+    private SweetAlertDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -286,7 +286,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     for (int i = 0; i < TempData.length; i++)
                     {
 
-                        Log.e(" Map ",""+i);
+                       // Log.e(" Map ",""+i);
 
                         String[] lat_long = TempData[i];
 

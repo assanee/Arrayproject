@@ -1,6 +1,7 @@
 package xyz.stepsecret.arrayproject3.TabFragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -9,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -327,7 +330,6 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
     }
 
 
-
     public void show_failure(String message)
     {
         new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
@@ -380,7 +382,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
 
         Log.e(" Home "," Location success ");
 
-        if(check_do)
+        if(check_do && mLastLocation != null)
         {
             check_do = false;
 

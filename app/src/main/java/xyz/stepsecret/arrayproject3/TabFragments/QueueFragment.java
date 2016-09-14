@@ -114,19 +114,28 @@ public class QueueFragment extends Fragment {
 
                 if(!result.getError() && result.getData().length > 0) {
 
-
+                    for(int i = 0 ; i < result.getData().length ; i++)
+                    {
+                        for(int j = 0 ; j < result.getData()[i].length ; j++)
+                        {
+                            if(result.getData()[i][j].isEmpty() && result.getData()[i][j] == null)
+                            {
+                                result.getData()[i][j] = "-";
+                            }
+                        }
+                    }
 
                     for(int i = 0 ; i < result.getData().length ; i++)
                     {
                         String[] alert = result.getStatus()[i];
                         String id_queue = result.getData()[i][0];
-                        String current_queue_table = "1-2";
+                        String current_queue_table = result.getData()[i][13];
                         String name_brand = result.getData()[i][8];
                         String name_branch = result.getData()[i][9];
-                        String current_queue = "A009";
-                        String current_queue_number = "3";
-                        String wait_time = "30";
-                        String wait_queue = "9";
+                        String current_queue = result.getData()[i][12];
+                        String current_queue_number = result.getData()[i][14];
+                        String wait_time = result.getData()[i][15];
+                        String wait_queue = result.getData()[i][11];
                         String firstname = Store_data.getString("firstname");
                         String lastname = Store_data.getString("lastname");
                         String date = result.getData()[i][5];

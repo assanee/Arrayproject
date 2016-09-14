@@ -2,6 +2,7 @@ package xyz.stepsecret.arrayproject3.TabFragments;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -165,7 +166,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 }
                 else
                 {
-                    show_failure(result.getMessage());
+                    //show_failure(result.getMessage());
                     Log.e(" FavoriteData ","error");
                 }
 
@@ -230,7 +231,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 }
                 else
                 {
-                    show_failure(result.getMessage());
+                    //show_failure(result.getMessage());
                     Log.e(" HistoryData ","error");
                 }
 
@@ -293,7 +294,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 else
                 {
                    // show_failure(result.getMessage());
-                   // Log.e(" PromotionData ","error");
+                    Log.e(" PromotionData ","error");
                 }
 
 
@@ -362,19 +363,14 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        Log.e(" Home "," Location success ");
-        Log.e(" Home "," check_do > "+check_do);
 
-        if(check_do)
+        if(check_do && mLastLocation != null)
         {   check_do = false;
 
-            Log.e(" Home "," call FavoriteData ");
             FavoriteData();
 
-            Log.e(" Home > "," call PromotionData ");
             Log.e("Promotion home "," lat : "+mLastLocation.getLatitude()+" long : "+mLastLocation.getLongitude());
             PromotionData(mLastLocation);
         }

@@ -49,5 +49,18 @@
 
     <string name="map">Map</string>
 
+    <string name="areyousure">Are you sure?</string>
+    <string name="cancel">No,cancel plx!</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="deleted">Deleted</string>
+    <string name="reserve">Reserve success</string>
+    <string name="sure">Yes,delete it!</string>
+    <string name="close">Close</string>
+
+    <string name="numberofseat">Number of Seat(s)</string>
+    <string name="reservenow">RESERVE NOW</string>
+
+    <string name="search">Search</string>
+
 
 </resources>
