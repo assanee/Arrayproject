@@ -1,7 +1,7 @@
 package xyz.stepsecret.arrayproject3.TabFragments.adapters;
 
 /**
- * Created by pratap.kesaboyina on 24-12-2014.
+ * Created by stepsecret on 24-12-2014.
  */
 
 import android.content.Context;

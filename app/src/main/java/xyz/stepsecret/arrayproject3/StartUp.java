@@ -3,9 +3,12 @@ package xyz.stepsecret.arrayproject3;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
@@ -42,6 +45,8 @@ public class StartUp extends AppCompatActivity {
 
         pDialog();
 
+        //turnGPSOn();
+
         Initial_();
 
         showGPSDisabledAlertToUser();
@@ -55,22 +60,11 @@ public class StartUp extends AppCompatActivity {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
 
-            new CountDownTimer(5000, 1000){
-                public void onTick(long millisUntilDone){
-
-                    Log.e(" StartUp "," "+millisUntilDone);
-                }
-
-                public void onFinish() {
-
-                    Log.e(" StartUp "," onFinish");
                     pDialog.cancel();
                     Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
                     finish();
 
-                }
-            }.start();
         }
         else
         {
@@ -151,8 +145,9 @@ public class StartUp extends AppCompatActivity {
                 .setRationaleMessage("we need permission for write external storage and find your location")
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setGotoSettingButtonText("Go to setting")
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 .check();
 
 
@@ -166,7 +161,6 @@ public class StartUp extends AppCompatActivity {
         else
         {
 
-
             Store_data.putString("message", "sound");
             Store_data.putString("notification", "sound");
             Store_data.putString("language", "en");
@@ -176,11 +170,32 @@ public class StartUp extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        pDialog.cancel();
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        showGPSDisabledAlertToUser();
+        new CountDownTimer(5000, 1000){
+            public void onTick(long millisUntilDone){
+
+                Log.e(" StartUp "," "+millisUntilDone);
+            }
+
+            public void onFinish() {
+
+                showGPSDisabledAlertToUser();
+
+            }
+        }.start();
+
 
     }
 

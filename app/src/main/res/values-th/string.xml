@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Array project 3</string>
 
-    <string name="action_settings">ตั้งค่า</string>
     <string name="Gender_choose">เพศ</string>
     <string-array name="gender">
         <item>ชาย</item>

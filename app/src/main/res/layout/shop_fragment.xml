@@ -46,24 +46,14 @@
 
         </RelativeLayout>
 
-        <SearchView
-            android:id="@+id/search_branch"
-            android:layout_width="match_parent"
-            android:elevation="2dp"
-            android:background="#fff"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp">
-        </SearchView>
-
     </LinearLayout>
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/card_view"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
 
         <android.support.v7.widget.RecyclerView
@@ -71,6 +61,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none" />
+
+         <android.support.v7.widget.RecyclerView
+                    android:id="@+id/shop_my_recycler_view_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" />
 
 
 

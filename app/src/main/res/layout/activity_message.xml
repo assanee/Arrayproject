@@ -52,7 +52,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/message_alert"
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/tv_message1"
                     android:textSize="20dp" />
 
 

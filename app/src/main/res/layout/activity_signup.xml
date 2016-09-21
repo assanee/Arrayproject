@@ -116,8 +116,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="1dp"
-                    android:layout_marginStart="1dp"
-                    android:id="@+id/img_gender" />
+                    android:layout_marginStart="1dp" />
 
             <android.support.v7.widget.AppCompatSpinner
                 style="@android:style/Widget.Holo.Light.Spinner"

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -36,19 +35,19 @@ import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ShopSingleItemModel;
 import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
-public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSectionListDataAdapter.SingleItemRowHolder> {
+public class ShopSectionListDataAdapterSearch extends RecyclerView.Adapter<ShopSectionListDataAdapterSearch.SingleItemRowHolder> {
 
     private ArrayList<ShopSingleItemModel> itemsList;
     private Context mContext;
 
-    public ShopSectionListDataAdapter(Context context, ArrayList<ShopSingleItemModel> itemsList) {
+    public ShopSectionListDataAdapterSearch(Context context, ArrayList<ShopSingleItemModel> itemsList) {
         this.itemsList = itemsList;
         this.mContext = context;
     }
 
     @Override
     public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.shop_list_single_card, null);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.shop_list_single_card_search, null);
         SingleItemRowHolder mh = new SingleItemRowHolder(v);
         return mh;
     }
@@ -65,12 +64,7 @@ public class ShopSectionListDataAdapter extends RecyclerView.Adapter<ShopSection
 
         holder.id_branch = singleItem.getIdbranch();
 
-       /* Picasso.with(mContext)
-                .load(singleItem.getUrl())
-                .placeholder(R.drawable.nodownload)
-                .error(R.drawable.nodownload)
-                .into(holder.itemImage);
-*/
+
         Glide.with(mContext)
                 .load(singleItem.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

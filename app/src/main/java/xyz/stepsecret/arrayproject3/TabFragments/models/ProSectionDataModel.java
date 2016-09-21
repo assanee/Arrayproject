@@ -3,7 +3,7 @@ package xyz.stepsecret.arrayproject3.TabFragments.models;
 import java.util.ArrayList;
 
 /**
- * Created by pratap.kesaboyina on 30-11-2015.
+ * Created by stepsecret on 30-11-2015.
  */
 public class ProSectionDataModel {
 

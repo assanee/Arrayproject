@@ -1,7 +1,7 @@
 package xyz.stepsecret.arrayproject3.TabFragments;
 
 /**
- * Created by Lincoln on 15/01/16.
+ * Created by stepsecret on 15/01/16.
  */
 public class QueueModel {
     private String current_queue_table, namebrand, current_queue, current_queue_number, wait_time, firstname, lastname, date, time, queue, number, logo_brand;

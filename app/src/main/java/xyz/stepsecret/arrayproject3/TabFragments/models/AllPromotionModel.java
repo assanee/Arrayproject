@@ -1,7 +1,7 @@
 package xyz.stepsecret.arrayproject3.TabFragments.models;
 
 /**
- * Created by Lincoln on 15/01/16.
+ * Created by stepsecret on 15/01/16.
  */
 public class AllPromotionModel {
     private String  id, Logo_brand, branch, logo_promotion;

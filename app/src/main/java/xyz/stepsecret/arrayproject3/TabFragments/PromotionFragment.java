@@ -19,7 +19,7 @@ import xyz.stepsecret.arrayproject3.TabFragments.models.ProSectionDataModel;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ProSingleItemModel;
 
 /**
- * Created by iFocus on 27-10-2015.
+ * Created by stepsecret on 27-10-2015.
  */
 public class PromotionFragment extends Fragment {
 

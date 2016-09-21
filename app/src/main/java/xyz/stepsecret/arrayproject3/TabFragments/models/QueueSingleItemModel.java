@@ -1,7 +1,7 @@
 package xyz.stepsecret.arrayproject3.TabFragments.models;
 
 /**
- * Created by pratap.kesaboyina on 01-12-2015.
+ * Created by stepsecret on 01-12-2015.
  */
 public class QueueSingleItemModel {
 

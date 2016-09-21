@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,30 +42,35 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import xyz.stepsecret.arrayproject3.API.Favorite_API;
 import xyz.stepsecret.arrayproject3.API.Near_API;
 import xyz.stepsecret.arrayproject3.API.Promotion_API;
+import xyz.stepsecret.arrayproject3.API.SearchNear_API;
 import xyz.stepsecret.arrayproject3.Config.ConfigData;
 import xyz.stepsecret.arrayproject3.MainActivity;
 import xyz.stepsecret.arrayproject3.MapActivity;
 import xyz.stepsecret.arrayproject3.Model.Favorite_Model;
 import xyz.stepsecret.arrayproject3.Model.Near_Model;
 import xyz.stepsecret.arrayproject3.Model.Promotion_Model;
+import xyz.stepsecret.arrayproject3.Model.SearchNear_Model;
 import xyz.stepsecret.arrayproject3.R;
 import xyz.stepsecret.arrayproject3.TabFragments.adapters.ShopRecyclerViewDataAdapter;
+import xyz.stepsecret.arrayproject3.TabFragments.adapters.ShopRecyclerViewDataAdapterSearch;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ShopSectionDataModel;
 import xyz.stepsecret.arrayproject3.TabFragments.models.ShopSingleItemModel;
 import xyz.stepsecret.arrayproject3.TinyDB.TinyDB;
 
 /**
- * Created by iFocus on 27-10-2015.
+ * Created by stepsecret on 27-10-2015.
  */
 public class ShopFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
 
     private ArrayList<ShopSectionDataModel> allSampleData;
+    private ArrayList<ShopSectionDataModel> allSampleDataSearch;
 
     private SearchView search_shop;
-    private SearchView search_branch;
     private RecyclerView my_recycler_view;
+    private RecyclerView my_recycler_view_search;
     private ShopRecyclerViewDataAdapter adapter;
+    private ShopRecyclerViewDataAdapterSearch adapter_search;
     private ImageView img_map;
 
     private RestAdapter restAdapter;
@@ -95,58 +101,65 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
                 .setEndpoint(ConfigData.API).build();
 
         allSampleData = new ArrayList<ShopSectionDataModel>();
+        allSampleDataSearch = new ArrayList<ShopSectionDataModel>();
         search_shop = (SearchView) v.findViewById(R.id.search_shop);
-        search_branch = (SearchView) v.findViewById(R.id.search_branch);
-
-        my_recycler_view = (RecyclerView) v.findViewById(R.id.shop_my_recycler_view);
 
         img_map = (ImageView) v.findViewById(R.id.img_map);
 
+        my_recycler_view = (RecyclerView) v.findViewById(R.id.shop_my_recycler_view);
+        my_recycler_view_search = (RecyclerView) v.findViewById(R.id.shop_my_recycler_view_search);
+
+
+
         my_recycler_view.setHasFixedSize(true);
-
+        my_recycler_view_search.setHasFixedSize(true);
         adapter = new ShopRecyclerViewDataAdapter(getContext(), allSampleData);
-
+        adapter_search = new ShopRecyclerViewDataAdapterSearch(getContext(), allSampleDataSearch);
         my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        //my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-
+        my_recycler_view_search.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         my_recycler_view.setAdapter(adapter);
+        my_recycler_view_search.setAdapter(adapter_search);
+
+        /*my_recycler_view_search.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        my_recycler_view_search.setLayoutManager(mLayoutManager);
+        my_recycler_view_search.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        my_recycler_view_search.setItemAnimator(new DefaultItemAnimator());
+        my_recycler_view_search.setAdapter(adapter_search);
+        */
+
+        my_recycler_view_search.setVisibility(View.GONE);
 
 
         search_shop.setQueryHint(getResources().getString(R.string.shop_search));
-        search_branch.setQueryHint(getResources().getString(R.string.branch_search));
-        search_branch.setVisibility(View.GONE);
 
         search_shop.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
-                search_branch.setVisibility(View.VISIBLE);
+                //Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+                //search_branch.setVisibility(View.VISIBLE);
+
+                if(!query.isEmpty())
+                {
+                    SearchNearData(query);
+                }
+
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
+                if(!newText.isEmpty())
+                {
+                    SearchNearData(newText);
+                }
                 return false;
             }
         });
 
-
-        search_branch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
 
 
         Glide.with(this)
@@ -171,6 +184,7 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
         check_do = true;
 
 
+        clearData();
 
         buildGoogleApiClient();
 
@@ -194,7 +208,19 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
 
     }
 
+    public void clearData() {
 
+        Log.e("Shop "," Clear Data ");
+        allSampleData.clear(); //clear list
+        adapter.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
+    }
+
+    public void clearDataSearch()
+    {
+        Log.e("Shop "," Search Clear Data ");
+        allSampleDataSearch.clear(); //clear list
+        adapter_search.notifyDataSetChanged(); //let your adapter know about the changes and reload view.
+    }
 
     public void FavoriteData()
     {
@@ -325,6 +351,81 @@ public class ShopFragment extends Fragment implements GoogleApiClient.Connection
 
             }
         });
+
+
+    }
+
+
+    public void SearchNearData(final String query)
+    {
+        if(mLastLocation != null)
+        {
+            Log.e(" NearData ","start > "+mLastLocation.getLatitude()+" : "+mLastLocation.getLongitude());
+
+            final SearchNear_API searchNear_api = restAdapter.create(SearchNear_API.class);
+
+            searchNear_api.Get_Search_API(Store_data.getString("api_key"), query, mLastLocation.getLatitude()+"", mLastLocation.getLongitude()+"", new Callback<SearchNear_Model>() {
+                @Override
+                public void success(SearchNear_Model result, Response response) {
+
+                    if(!result.getError() && result.getData().length > 0) {
+
+                        clearDataSearch();
+                        my_recycler_view.setVisibility(View.GONE);
+                        my_recycler_view_search.setVisibility(View.VISIBLE);
+
+                        Log.e(" TAG ","success : history : > "+result.getData().length );
+
+                        String[][] TempData = result.getData();
+
+                        ShopSectionDataModel dm = new ShopSectionDataModel();
+
+                        dm.setHeaderTitle(getResources().getString(R.string.search)+" : "+query);
+
+                        ArrayList<ShopSingleItemModel> singleItem = new ArrayList<ShopSingleItemModel>();
+
+                        for (int i = 0; i < TempData.length; i++)
+                        {
+
+                            String id = TempData[i][0];
+                            String id_branch = TempData[i][1];
+                            String logo = TempData[i][9];
+                            String name_brand = TempData[i][2];
+                            String name_branch = TempData[i][3];
+
+                            Log.e(" Shop ","name_brand : "+name_brand);
+
+                            singleItem.add(new ShopSingleItemModel(id, id_branch, name_brand, name_branch, ConfigData.Logo+logo));
+
+                        }
+
+                        dm.setAllItemsInSection(singleItem);
+
+                        allSampleDataSearch.add(dm);
+                        adapter_search.notifyDataSetChanged();
+
+                    }
+                    else
+                    {
+                        my_recycler_view_search.setVisibility(View.GONE);
+                        Log.e(" NearData ","error");
+                    }
+
+
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                    show_failure(error.getMessage());
+                    Log.e(" NearData ","failure ");
+
+                }
+            });
+        }
+
+
 
 
     }
